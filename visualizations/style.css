@@ -27,8 +27,15 @@ button { font-family: inherit; }
 }
 
 header { padding: 42px 0 24px; }
+.header-line { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; }
 h1 { margin: 0; font-size: 32px; font-weight: 500; letter-spacing: -.02em; }
 .sub { margin: 4px 0 0; color: var(--muted); }
+.repo-link {
+  color: var(--muted);
+  font: 13px/1.4 ui-sans-serif, system-ui, sans-serif;
+  text-decoration: none;
+}
+.repo-link:hover { color: var(--ink); text-decoration: underline; }
 
 .hero { margin: 0 0 28px; }
 .hero h2 { margin: 0 0 6px; font-size: 16px; font-weight: 500; }
@@ -176,6 +183,7 @@ h1 { margin: 0; font-size: 32px; font-weight: 500; letter-spacing: -.02em; }
 @media (max-width: 480px) {
   body { font-size: 16px; }
   h1 { font-size: 28px; }
+  .header-line { align-items: center; }
   .tabs { gap: 18px; }
   .cons-list { grid-template-columns: 1fr; }
   .chronology td:nth-child(3) { text-align: right; }

@@ -5,6 +5,8 @@ audits, and a computer search that rewrote the simplicity-vs-accuracy frontier.
 All work produced July 14–15, 2026 in a Claude Code session (model: Fable 5),
 with independent review by ChatGPT ("Sol 5.6").
 
+[Interactive explorer →](https://jpthor.github.io/square-the-circle/)
+
 ## The problem
 
 Exact circle squaring is impossible (Lindemann 1882). The sport, since Kochański
