@@ -3,100 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Squaring the circle — an interactive exploration</title>
+<title>Squaring the circle</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrap">
 
 <header>
-  <h1>Squaring the circle, approximately</h1>
-  <p class="sub">Exact squaring is impossible — π is transcendental (Lindemann, 1882). The
-  340-year sport is <em>approximate</em> squaring: with compass and straightedge, construct a
-  segment whose square matches the circle's area to as many digits as possible, in as few
-  strokes as possible. This page replays every construction live: each figure is recomputed
-  from raw intersections in your browser, and the digits shown are computed, not quoted.</p>
+  <h1>Squaring the circle</h1>
+  <p class="sub">Compass-and-straightedge approximations, compared by cost and accuracy.</p>
 </header>
 
 <div class="hero">
-  <h2>The frontier: strokes vs correct digits of π — click a dot to open its construction</h2>
+  <h2>Strokes and correct digits of π</h2>
   <div id="plot-box"></div>
 </div>
 
-<div class="tabs" id="tabs">
-  <button class="tab active" data-tab="history">History</button>
-  <button class="tab" data-tab="existing">Existing solutions</button>
-  <button class="tab" data-tab="new">New solutions</button>
+<div class="tabs" id="tabs" role="tablist" aria-label="Sections">
+  <button class="tab active" id="tab-history" role="tab" aria-selected="true" aria-controls="panel-history" data-tab="history">History</button>
+  <button class="tab" id="tab-existing" role="tab" aria-selected="false" aria-controls="panel-existing" data-tab="existing">Published</button>
+  <button class="tab" id="tab-new" role="tab" aria-selected="false" aria-controls="panel-new" data-tab="new">Search</button>
 </div>
 
-<section class="panel active hist" id="panel-history">
-  <h3>The problem</h3>
-  <p>Given a circle, construct — using only an unmarked straightedge and a compass — a square
-  of exactly the same area. Posed by the Greeks, it resisted for over two millennia until
-  Lindemann proved in 1882 that π is transcendental: no finite chain of lines and circles can
-  produce the required length √π·r, because every constructible length is algebraic.</p>
-  <p>What survives is the approximation game. A construction earns its keep on two axes: how
-  many <b>correct digits of π</b> its square captures, and how few <b>strokes</b> it needs
-  (one stroke = one line through two constructed points, or one circle with a constructed
-  centre; intersections are free). Every entry below is a point on that trade-off — and the
-  chart above shows the 2026 state of play.</p>
-  <p class="note">Two flavours of compass appear throughout: Euclid's <em>collapsing</em>
-  compass (a circle may only be drawn about one constructed point <em>through</em> another) and
-  the modern <em>rigid</em> compass (a distance may be carried elsewhere, one stroke). The
-  compass equivalence theorem makes them equal in power — but not in stroke counts, which is
-  why "transfer-free" constructions carry a badge here.</p>
+<section class="panel active hist" id="panel-history" role="tabpanel" aria-labelledby="tab-history">
+  <p>Exact construction is impossible: π is transcendental. The remaining problem is to
+  approximate √π·r with the fewest lines and circles.</p>
 
-  <h3>A short history</h3>
-  <div class="timeline">
-    <div class="tl-card"><div class="when">c. 1650 BC</div><div class="who">Rhind papyrus</div>
-      <div class="what">Egyptian scribes square the circle with side 8d/9 — implying π ≈ 3.1605. One digit.</div></div>
-    <div class="tl-card"><div class="when">c. 450 BC</div><div class="who">Anaxagoras</div>
-      <div class="what">Works on the problem while imprisoned in Athens — the first recorded attempt at the exact problem.</div></div>
-    <div class="tl-card"><div class="when">c. 440 BC</div><div class="who">Hippocrates of Chios</div>
-      <div class="what">Squares his lunes — the first curved regions ever squared exactly, feeding two millennia of false hope.</div></div>
-    <div class="tl-card"><div class="when">c. 250 BC</div><div class="who">Archimedes</div>
-      <div class="what">Brackets π between 223/71 and 22/7, and shows squaring the circle is equivalent to rectifying it.</div></div>
-    <div class="tl-card"><div class="when">c. 480 AD</div><div class="who">Zu Chongzhi</div>
-      <div class="what">Finds the miracle fraction 355/113 (the Milü) — π to 6.6 digits, unbeatable until 5-digit denominators.</div></div>
-    <div class="tl-card"><div class="when">1685</div><div class="who">Adam Kochański</div>
-      <div class="what">Rectifies the circumference to 4 decimal places with famously few moves — one compass opening. (Builder in the next tab.)</div></div>
-    <div class="tl-card"><div class="when">1849</div><div class="who">Jacob de Gelder</div>
-      <div class="what">Constructs 355/113 as a length via 3 + 4²/(7²+8²) — but never the square's side. (Builder in the next tab.)</div></div>
-    <div class="tl-card"><div class="when">1882</div><div class="who">Ferdinand von Lindemann</div>
-      <div class="what">Proves π transcendental. The exact problem dies; the approximation sport is all that remains.</div></div>
-    <div class="tl-card"><div class="when">1913</div><div class="who">Srinivasa Ramanujan</div>
-      <div class="what">Constructs the side √(355/113)·r — off by one inch on a 140,000-square-mile circle. (Builder in the next tab.)</div></div>
-    <div class="tl-card"><div class="when">1914</div><div class="who">Ramanujan again</div>
-      <div class="what">Reaches 8 decimal places via (9²+19²/22)^¼, riding a freak spike (16539) in the continued fraction of π⁴.</div></div>
-    <div class="tl-card"><div class="when">1913–2019</div><div class="who">Hobson, Dixon, Chu</div>
-      <div class="what">Hobson gets the side in very few moves at ~4 digits; Chu (2019) reaches 9 digits at 68+ steps.</div></div>
-    <div class="tl-card"><div class="when">2022</div><div class="who">Frédéric Beatrix</div>
-      <div class="what">Geometrography survey (Parabola 58(2)): 13 steps → 4.32 digits, the published simplicity record.</div></div>
-    <div class="tl-card"><div class="when">2026</div><div class="who">This project</div>
-      <div class="what">Machine-audited 355/113 constructions (14, 15 strokes) — then a computer search collapses the frontier: 5 strokes → 6.2 digits, 7 strokes → 8.0 digits, transfer-free. See the New solutions tab.</div></div>
-  </div>
+  <table class="chronology">
+    <tbody>
+      <tr><th>c. 1650 BC</th><td>Rhind papyrus</td><td>π ≈ 3.1605</td></tr>
+      <tr><th>1685</th><td>Kochański</td><td>4.23 digits</td></tr>
+      <tr><th>1882</th><td>Lindemann</td><td>Exact construction proved impossible</td></tr>
+      <tr><th>1913</th><td>Ramanujan</td><td>6.57 digits</td></tr>
+      <tr><th>1914</th><td>Ramanujan</td><td>9.00 digits</td></tr>
+      <tr><th>2022</th><td>Beatrix</td><td>13 strokes · 4.32 digits</td></tr>
+      <tr><th>2026</th><td>This search</td><td>7 strokes · 8.05 digits</td></tr>
+    </tbody>
+  </table>
 
-  <h3>What the computer search changed</h3>
-  <p>Three search engines (an exhaustive stroke-space BFS, 290k random rollouts over a
-  3.4-million-point catalog, and a ~30-million-state beam search) showed that record-beating
-  constructions are not rare treasures but lie around at almost every stroke count — because
-  approximate squaring has always been coincidence-hunting, and the published record simply
-  reflected how small a space humans could search by hand. The mined constants have no
-  number-theoretic meaning; the constructions that <em>mean</em> something (355/113,
-  (2143/22)^¼) owe their accuracy to giant terms in continued fractions, and tellingly the
-  unbiased search never stumbled on 4/√113 at any depth: meaningful constructions must be
-  aimed at, record-breaking ones are lying around.</p>
-  <p class="note">Caveats that travel with the results: the 4-stroke uses a tangency point;
-  the 5-, 8- and 9-stroke need a rigid compass (their strict-Euclid counts are larger); the
-  Ramanujan 1913 stroke range rests on an unverified compilation; and every construction here
-  produces the square's side, not the drawn square. Full audit trail in the repository.</p>
+  <p class="note">One stroke is one line or circle; intersections are free.</p>
 </section>
 
-<section class="panel" id="panel-existing">
+<section class="panel" id="panel-existing" role="tabpanel" aria-labelledby="tab-existing">
   <div id="old-builder"></div>
 </section>
 
-<section class="panel" id="panel-new">
+<section class="panel" id="panel-new" role="tabpanel" aria-labelledby="tab-new">
   <div id="new-builder"></div>
 </section>
 

@@ -142,15 +142,14 @@ class Builder {
     this.root = root; this.list = list; this.k = 0;
     root.innerHTML = `
       <div class="builder">
-        <div class="cons-list"></div>
+        <nav class="cons-list" aria-label="Constructions"></nav>
         <div class="stage">
           <div class="stage-head"><div class="name"></div><div class="meta"></div></div>
-          <svg></svg>
+          <svg role="img"></svg>
           <div class="controls">
-            <button class="btn prev">◀ Prev</button>
-            <button class="btn primary next">Next ▶</button>
+            <button class="btn prev">Previous</button>
+            <button class="btn next">Next</button>
             <span class="stepno"></span>
-            <div class="dots"></div>
           </div>
           <div class="caption"></div>
           <div class="readout"></div>
@@ -169,10 +168,8 @@ class Builder {
       const R = replay(c), ev = evaluate(c, R);
       const card = document.createElement('button');
       card.className = 'cons-card'; card.dataset.id = c.id;
-      card.innerHTML = `<div class="t">${c.name}</div><div class="m">${c.author}, ${c.year}</div>
-        <div class="chips"><span class="chip strokes">${c.strokes} strokes</span>
-        <span class="chip digits">${ev.digits.toFixed(2)} digits</span>
-        ${(c.badges || []).map(b => `<span class="chip ${b.cls}">${b.t}</span>`).join('')}</div>`;
+      card.innerHTML = `<div class="t">${c.name}</div>
+        <div class="m">${c.strokes} strokes · ${ev.digits.toFixed(2)} digits</div>`;
       card.onclick = () => this.select(c.id);
       box.appendChild(card);
     }
@@ -183,15 +180,14 @@ class Builder {
     this.ev = evaluate(this.con, this.R);
     this.bb = bounds(this.R, this.con);
     this.k = 0;
-    this.root.querySelectorAll('.cons-card').forEach(c => c.classList.toggle('sel', c.dataset.id === id));
+    this.root.querySelectorAll('.cons-card').forEach(c => {
+      const selected = c.dataset.id === id;
+      c.classList.toggle('sel', selected);
+      c.setAttribute('aria-pressed', selected);
+    });
     this.$('.name').textContent = this.con.name;
     this.$('.meta').textContent = `${this.con.author}, ${this.con.year} — ${this.con.constant}`;
     this.$('.notes').textContent = this.con.notes || '';
-    const dots = this.$('.dots'); dots.innerHTML = '';
-    for (let i = 0; i <= this.con.steps.length; i++) {
-      const d = document.createElement('button'); d.className = 'dot';
-      d.onclick = () => this.go(i); dots.appendChild(d);
-    }
     this.go(0);
   }
   go(k) {
@@ -207,7 +203,9 @@ class Builder {
     const X = x => (x - bb.x0) * sc + (W - sc * (bb.x1 - bb.x0)) / 2;
     const Y = y => H - ((y - bb.y0) * sc + (H - sc * (bb.y1 - bb.y0)) / 2);
     const svg = this.$('svg');
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.innerHTML = '';
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('aria-label', `${con.name}, step ${k} of ${n}`);
+    svg.innerHTML = '';
     const diag = 2 * (W + H) / sc;
     const drawObj = (o, stroke, width, dash) => {
       if (o.kind === 'circle') el('circle', { cx: X(o.cx), cy: Y(o.cy), r: o.r * sc, fill: 'none', stroke, 'stroke-width': width, ...(dash ? { 'stroke-dasharray': dash } : {}) }, svg);
@@ -216,15 +214,15 @@ class Builder {
     // objects: givens, then steps < k gray, step k-1 teal
     for (const rec of R.order) {
       const o = R.objs[rec.id];
-      if (rec.given) drawObj(o, '#888780', rec.id === 'GAMMA' ? 2 : 1.4);
-      else if (rec.step < k - 1) drawObj(o, '#cfccc2', 1);
-      else if (rec.step === k - 1) drawObj(o, '#1d9e75', 1.8);
+      if (rec.given) drawObj(o, '#777', rec.id === 'GAMMA' ? 2 : 1.4);
+      else if (rec.step < k - 1) drawObj(o, '#d2d2d2', 1);
+      else if (rec.step === k - 1) drawObj(o, '#245b9b', 1.8);
     }
     // answer segment at final step
     const done = k === n;
     if (done) {
       const [a, b] = con.answer.p, p = R.pts[a], q = R.pts[b];
-      el('line', { x1: X(p.x), y1: Y(p.y), x2: X(q.x), y2: Y(q.y), stroke: '#d85a30', 'stroke-width': 3.4, 'stroke-linecap': 'round' }, svg);
+      el('line', { x1: X(p.x), y1: Y(p.y), x2: X(q.x), y2: Y(q.y), stroke: '#245b9b', 'stroke-width': 3.2, 'stroke-linecap': 'round' }, svg);
     }
     // points
     for (const [name, p] of Object.entries(R.pts)) {
@@ -232,34 +230,31 @@ class Builder {
       if (!isGiven && p.step >= k) continue;
       const isAns = done && con.answer.p.includes(name);
       const isNew = !isGiven && p.step === k - 1;
-      el('circle', { cx: X(p.x), cy: Y(p.y), r: isAns ? 4 : isNew ? 3.6 : 2.6, fill: isAns ? '#993c1d' : isNew ? '#0f6e56' : '#5f5e5a' }, svg);
+      el('circle', { cx: X(p.x), cy: Y(p.y), r: isAns ? 4 : isNew ? 3.6 : 2.6, fill: isAns || isNew ? '#245b9b' : '#666' }, svg);
       if (con.hideLabels && !isAns && !isGiven && !isNew) continue;
-      const t = el('text', { x: X(p.x) + 6, y: Y(p.y) - 6, 'font-size': 12.5, fill: isAns ? '#993c1d' : isNew ? '#0f6e56' : '#5f5e5a' }, svg);
+      const t = el('text', { x: X(p.x) + 6, y: Y(p.y) - 6, 'font-size': 12.5, fill: isAns || isNew ? '#245b9b' : '#666' }, svg);
       t.textContent = name;
     }
     // controls
     this.$('.prev').disabled = k === 0;
     this.$('.next').disabled = k === n;
     const cost = con.steps.slice(0, k).reduce((s, st) => s + (st.cost || 0), 0);
-    this.$('.stepno').textContent = `step ${k}/${n} · strokes so far: ${cost}`;
-    this.root.querySelectorAll('.dot').forEach((d, i) => {
-      d.className = 'dot' + (i < k ? ' done' : '') + (i === k ? ' cur' : '');
-    });
+    this.$('.stepno').textContent = `${k} / ${n} · ${cost} strokes`;
     const cap = this.$('.caption');
-    if (k === 0) cap.innerHTML = `<b>Givens.</b> ${con.givensCaption || 'Circle Γ with centre O and the drawn diameter line.'} Use Next ▶ to step through the construction.`;
+    if (k === 0) cap.innerHTML = `<b>Givens.</b> ${con.givensCaption || 'Circle Γ with centre O and the drawn diameter line.'}`;
     else {
       const st = con.steps[k - 1];
-      cap.innerHTML = `<b>Step ${k}.</b> ${st.cap} <span class="cost">${st.cost ? `[+${st.cost} stroke${st.cost > 1 ? 's' : ''}]` : '[free]'}</span>`;
+      cap.innerHTML = `<b>${k}.</b> ${st.cap} <span class="cost">${st.cost ? `+${st.cost}` : 'free'}</span>`;
     }
     // readout
     const ro = this.$('.readout'), ev = this.ev;
     if (done) {
       const errAbs = Math.abs(ev.piApprox - PI);
       ro.innerHTML =
-        `<span><span class="k">computed in your browser: π ≈ </span><span class="v">${ev.piApprox.toFixed(12)}</span></span>` +
-        `<span><span class="k">|error| </span><span class="v">${errAbs.toExponential(2)}</span></span>` +
-        `<span><span class="k">digits of π </span><span class="v good">${ev.digits.toFixed(4)}</span></span>` +
-        `<span><span class="k">total strokes </span><span class="v">${con.strokes}</span></span>`;
+        `<span><span class="k">π ≈ </span><span class="v">${ev.piApprox.toFixed(12)}</span></span>` +
+        `<span><span class="k">error </span><span class="v">${errAbs.toExponential(2)}</span></span>` +
+        `<span><span class="k">digits </span><span class="v">${ev.digits.toFixed(4)}</span></span>` +
+        `<span><span class="k">strokes </span><span class="v">${con.strokes}</span></span>`;
     } else ro.innerHTML = '';
   }
 }
@@ -267,43 +262,65 @@ class Builder {
 /* ---------- pareto plot ---------- */
 function drawPlot(container, data, onPick) {
   const W = 1080, H = 430, L = 62, R = 24, T = 26, B = 56;
-  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, id: 'plot' });
+  const svg = el('svg', {
+    viewBox: `0 0 ${W} ${H}`,
+    id: 'plot',
+    role: 'img',
+    'aria-label': 'Construction strokes versus correct digits of pi'
+  });
   container.appendChild(svg);
   const xmin = Math.log10(3.6), xmax = Math.log10(75);
   const X = s => L + (W - L - R) * (Math.log10(s) - xmin) / (xmax - xmin);
   const Y = d => T + (H - T - B) * (1 - d / 11);
   for (let d = 0; d <= 10; d += 2) {
-    el('line', { x1: L, y1: Y(d), x2: W - R, y2: Y(d), stroke: '#e4e2da', 'stroke-width': d ? 1 : 1.6 }, svg);
-    const t = el('text', { x: L - 10, y: Y(d) + 4, 'font-size': 12, fill: '#5f5e5a', 'text-anchor': 'end' }, svg);
+    el('line', { x1: L, y1: Y(d), x2: W - R, y2: Y(d), stroke: '#e5e5e5', 'stroke-width': d ? 1 : 1.5 }, svg);
+    const t = el('text', { x: L - 10, y: Y(d) + 4, 'font-size': 12, fill: '#666', 'text-anchor': 'end' }, svg);
     t.textContent = d;
   }
   for (const s of [4, 6, 8, 10, 15, 20, 30, 40, 60]) {
-    const t = el('text', { x: X(s), y: H - B + 20, 'font-size': 12, fill: '#5f5e5a', 'text-anchor': 'middle' }, svg);
+    const t = el('text', { x: X(s), y: H - B + 20, 'font-size': 12, fill: '#666', 'text-anchor': 'middle' }, svg);
     t.textContent = s;
   }
-  const xl = el('text', { x: (L + W - R) / 2, y: H - 10, 'font-size': 13, fill: '#5f5e5a', 'text-anchor': 'middle' }, svg);
+  const xl = el('text', { x: (L + W - R) / 2, y: H - 10, 'font-size': 13, fill: '#666', 'text-anchor': 'middle' }, svg);
   xl.textContent = 'strokes (log scale)';
-  const yl = el('text', { x: 16, y: (T + H - B) / 2, 'font-size': 13, fill: '#5f5e5a', 'text-anchor': 'middle', transform: `rotate(-90 16 ${(T + H - B) / 2})` }, svg);
+  const yl = el('text', { x: 16, y: (T + H - B) / 2, 'font-size': 13, fill: '#666', 'text-anchor': 'middle', transform: `rotate(-90 16 ${(T + H - B) / 2})` }, svg);
   yl.textContent = 'correct digits of π';
   // frontier
   const front = data.filter(p => p.frontier).sort((a, b) => a.s - b.s);
-  el('polyline', { points: front.map(p => `${X(p.s)},${Y(p.d)}`).join(' '), fill: 'none', stroke: '#b4b2a9', 'stroke-width': 1, 'stroke-dasharray': '4 4', opacity: 0.7 }, svg);
+  el('polyline', { points: front.map(p => `${X(p.s)},${Y(p.d)}`).join(' '), fill: 'none', stroke: '#b9cbe0', 'stroke-width': 1.2 }, svg);
   const tip = document.createElement('div'); tip.className = 'plot-tip'; document.body.appendChild(tip);
-  const col = { pub: '#888780', f5: '#d85a30', sol: '#378add' };
+  const col = { pub: '#888', f5: '#245b9b', sol: '#245b9b' };
   for (const p of data) {
     if (p.span) el('line', { x1: X(p.span[0]), y1: Y(p.d), x2: X(p.span[1]), y2: Y(p.d), stroke: col[p.c], 'stroke-width': 1.5, opacity: 0.55 }, svg);
-    const dot = el('circle', { cx: X(p.s), cy: Y(p.d), r: 6, fill: col[p.c], style: p.cid ? 'cursor:pointer' : '' }, svg);
+    const dot = el('circle', {
+      cx: X(p.s), cy: Y(p.d), r: 5.5, fill: col[p.c],
+      style: p.cid ? 'cursor:pointer' : '',
+      ...(p.cid ? { tabindex: 0, role: 'button', 'aria-label': `${p.l}: ${p.s} strokes, ${p.d} digits` } : {})
+    }, svg);
     dot.addEventListener('mousemove', e => {
       tip.textContent = `${p.l} — ${p.s}${p.span ? '–' + p.span[1] : ''} strokes, ${p.d} digits${p.cid ? ' (click to open)' : ''}`;
       tip.style.left = (e.clientX + 14) + 'px'; tip.style.top = (e.clientY - 10) + 'px'; tip.style.opacity = 1;
     });
     dot.addEventListener('mouseleave', () => tip.style.opacity = 0);
-    if (p.cid) dot.addEventListener('click', () => onPick(p.cid));
+    if (p.cid) {
+      dot.addEventListener('click', () => onPick(p.cid));
+      dot.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(p.cid); }
+      });
+    }
+    const label = el('text', {
+      x: X(p.s) + (p.dx || 0),
+      y: Y(p.d) + (p.dy || -10),
+      'font-size': 11.5,
+      fill: '#555',
+      'text-anchor': p.anchor || 'middle'
+    }, svg);
+    label.textContent = p.short || p.l;
   }
-  const leg = [['pub', 'published'], ['f5', 'Fable 5'], ['sol', 'Sol 5.6']];
+  const leg = [['pub', 'published'], ['f5', 'this project']];
   leg.forEach(([c, t], i) => {
-    el('circle', { cx: L + 24 + i * 110, cy: T + 4, r: 5.5, fill: col[c] }, svg);
-    const tx = el('text', { x: L + 34 + i * 110, y: T + 8, 'font-size': 12.5, fill: '#5f5e5a' }, svg);
+    el('circle', { cx: L + 24 + i * 120, cy: T + 4, r: 5, fill: col[c] }, svg);
+    const tx = el('text', { x: L + 34 + i * 120, y: T + 8, 'font-size': 12.5, fill: '#666' }, svg);
     tx.textContent = t;
   });
 }
@@ -314,8 +331,16 @@ window.addEventListener('DOMContentLoaded', () => {
   const newB = new Builder(document.getElementById('new-builder'), CONS.filter(c => c.era === 'new'));
   const tabs = [...document.querySelectorAll('.tab')];
   const showTab = id => {
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === id));
-    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+    tabs.forEach(t => {
+      const selected = t.dataset.tab === id;
+      t.classList.toggle('active', selected);
+      t.setAttribute('aria-selected', selected);
+    });
+    document.querySelectorAll('.panel').forEach(p => {
+      const selected = p.id === 'panel-' + id;
+      p.classList.toggle('active', selected);
+      p.setAttribute('aria-hidden', !selected);
+    });
   };
   tabs.forEach(t => t.onclick = () => showTab(t.dataset.tab));
   drawPlot(document.getElementById('plot-box'), PLOT_DATA, cid => {
