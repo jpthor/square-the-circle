@@ -155,7 +155,7 @@ const CONS = [
 
 /* ================= NEW (this project) ================= */
 {
-  id: 'f5-4', era: 'new', name: '4-stroke (search)',
+  id: 'f5-4', era: 'new', name: '4-stroke',
   author: 'Fable 5 search', year: 2026, strokes: 4, digitsExpected: 4.4154,
   constant: 's = S₁S₂;  s² ≈ π to 4.42 digits — already beats the published 13-stroke record',
   badges: [{ t: 'tangency', cls: 'warn' }, { t: '2 transfers', cls: 'who' }],
@@ -181,7 +181,7 @@ const CONS = [
   answer: { p: ['S1', 'S2'], kind: 'side' },
 },
 {
-  id: 'f5-5', era: 'new', name: '5-stroke, closed form (search)',
+  id: 'f5-5', era: 'new', name: '5-stroke, closed form',
   author: 'Fable 5 search', year: 2026, strokes: 5, digitsExpected: 6.2418,
   constant: 's = [2 + (√42 − √15 − √(21−3√15))/2]·r',
   badges: [{ t: '3 transfers', cls: 'who' }],
@@ -210,7 +210,7 @@ const CONS = [
   answer: { p: ['I1', 'I2'], kind: 'side' },
 },
 {
-  id: 'f5-6', era: 'new', name: '6-stroke, transfer-free (search)',
+  id: 'f5-6', era: 'new', name: '6-stroke, transfer-free',
   author: 'Fable 5 search', year: 2026, strokes: 6, digitsExpected: 7.3682,
   constant: 's = |RS| (the radius of the final circle), marked as RT on the axis',
   badges: [{ t: 'collapsing-pure', cls: 'pure' }, { t: '7 under Beatrix rules', cls: 'pure' }],
@@ -241,7 +241,7 @@ const CONS = [
   answer: { p: ['R', 'T'], kind: 'side' },
 },
 {
-  id: 'f5-7', era: 'new', name: '7-stroke, transfer-free (search)',
+  id: 'f5-7', era: 'new', name: '7-stroke, transfer-free',
   author: 'Fable 5 search', year: 2026, strokes: 7, digitsExpected: 8.0484,
   constant: 's = A′K — eight digits of π from seven collapsing-compass strokes',
   badges: [{ t: 'collapsing-pure', cls: 'pure' }, { t: '8 under Beatrix rules', cls: 'pure' }],
@@ -275,7 +275,7 @@ const CONS = [
   answer: { p: ["A'", 'K'], kind: 'side' },
 },
 {
-  id: 'f5-8', era: 'new', name: '8-stroke (search)',
+  id: 'f5-8', era: 'new', name: '8-stroke',
   author: 'Fable 5 search', year: 2026, strokes: 8, digitsExpected: 8.1721,
   constant: 's = PX on the given diameter — one endpoint is the given point P',
   badges: [{ t: '3 transfers', cls: 'who' }],
@@ -312,7 +312,7 @@ const CONS = [
   answer: { p: ['P', 'X'], kind: 'side' },
 },
 {
-  id: 'f5-9', era: 'new', name: '9-stroke (search)',
+  id: 'f5-9', era: 'new', name: '9-stroke',
   author: 'Fable 5 search', year: 2026, strokes: 9, digitsExpected: 8.9850,
   constant: 's = E₁E₂ — nine digits of π, matching Chu 2019 (≥68 strokes) at 9 strokes',
   badges: [{ t: '2 transfers', cls: 'who' }],

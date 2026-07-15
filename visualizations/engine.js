@@ -145,12 +145,12 @@ class Builder {
         <nav class="cons-list" aria-label="Constructions"></nav>
         <div class="stage">
           <div class="stage-head"><div class="name"></div><div class="meta"></div></div>
-          <svg role="img"></svg>
           <div class="controls">
             <button class="btn prev">Previous</button>
             <button class="btn next">Next</button>
             <span class="stepno"></span>
           </div>
+          <svg role="img"></svg>
           <div class="caption"></div>
           <div class="readout"></div>
           <div class="notes"></div>
@@ -261,7 +261,7 @@ class Builder {
 
 /* ---------- pareto plot ---------- */
 function drawPlot(container, data, onPick) {
-  const W = 1080, H = 430, L = 62, R = 24, T = 26, B = 56;
+  const W = 1080, H = 360, L = 62, R = 24, T = 24, B = 50;
   const svg = el('svg', {
     viewBox: `0 0 ${W} ${H}`,
     id: 'plot',
