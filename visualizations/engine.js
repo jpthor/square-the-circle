@@ -127,15 +127,17 @@ function el(tag, attrs, parent) {
 function answerSquare(con, R) {
   if (con.answer.kind !== 'side') return null;
   const [a, b] = con.answer.p, p = R.pts[a], q = R.pts[b];
-  const side = dist(p, q), h = side / 2;
-  const u = { x: (q.x - p.x) / side, y: (q.y - p.y) / side };
-  const v = { x: -u.y, y: u.x };
+  const vx = q.x - p.x, vy = q.y - p.y;
+  const mid = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 };
   const { cx, cy } = R.objs.GAMMA;
+  const normals = [{ x: -vy, y: vx }, { x: vy, y: -vx }];
+  const centreDistance = n => Math.hypot(mid.x + n.x / 2 - cx, mid.y + n.y / 2 - cy);
+  const n = centreDistance(normals[0]) <= centreDistance(normals[1]) ? normals[0] : normals[1];
   return [
-    { x: cx - h * u.x - h * v.x, y: cy - h * u.y - h * v.y },
-    { x: cx + h * u.x - h * v.x, y: cy + h * u.y - h * v.y },
-    { x: cx + h * u.x + h * v.x, y: cy + h * u.y + h * v.y },
-    { x: cx - h * u.x + h * v.x, y: cy - h * u.y + h * v.y }
+    p,
+    q,
+    { x: q.x + n.x, y: q.y + n.y },
+    { x: p.x + n.x, y: p.y + n.y }
   ];
 }
 
