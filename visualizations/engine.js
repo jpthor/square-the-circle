@@ -164,8 +164,8 @@ class Builder {
             <span class="stepno"></span>
           </div>
           <div class="caption"></div>
-          <svg role="img"></svg>
           <div class="readout"></div>
+          <svg role="img"></svg>
           <div class="notes"></div>
         </div>
       </div>`;

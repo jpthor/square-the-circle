@@ -157,12 +157,14 @@ h1 { margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -.02em; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px 24px;
-  margin-top: 8px;
-  padding-top: 8px;
+  margin: 0 0 8px;
+  padding: 6px 0;
   border-top: 1px solid var(--rule-light);
+  border-bottom: 1px solid var(--rule-light);
   font: 13px/1.4 ui-sans-serif, system-ui, sans-serif;
   font-variant-numeric: tabular-nums;
 }
+.readout:empty { display: none; }
 .readout .k { color: var(--muted); }
 .readout .v { color: var(--ink); }
 .notes { display: none; }
