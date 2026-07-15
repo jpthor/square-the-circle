@@ -124,6 +124,18 @@ function el(tag, attrs, parent) {
   return e;
 }
 
+function answerSquare(con, R) {
+  if (con.answer.kind !== 'side') return null;
+  const [a, b] = con.answer.p, p = R.pts[a], q = R.pts[b];
+  const vx = q.x - p.x, vy = q.y - p.y;
+  const mid = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 };
+  const gamma = R.objs.GAMMA;
+  const normals = [{ x: -vy, y: vx }, { x: vy, y: -vx }];
+  const score = n => Math.hypot(mid.x + n.x / 2 - gamma.cx, mid.y + n.y / 2 - gamma.cy);
+  const n = score(normals[0]) >= score(normals[1]) ? normals[0] : normals[1];
+  return [p, q, { x: q.x + n.x, y: q.y + n.y }, { x: p.x + n.x, y: p.y + n.y }];
+}
+
 function bounds(R, con) {
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
   const add = (x, y) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); };
@@ -133,6 +145,8 @@ function bounds(R, con) {
   if (con.clip) { // optional tighter viewport [x0,y0,x1,y1]
     x0 = con.clip[0]; y0 = con.clip[1]; x1 = con.clip[2]; y1 = con.clip[3];
   }
+  const square = answerSquare(con, R);
+  if (square) for (const p of square) add(p.x, p.y);
   const pad = 0.06 * Math.max(x1 - x0, y1 - y0);
   return { x0: x0 - pad, x1: x1 + pad, y0: y0 - pad, y1: y1 + pad };
 }
@@ -207,19 +221,28 @@ class Builder {
     svg.setAttribute('aria-label', `${con.name}, step ${k} of ${n}`);
     svg.innerHTML = '';
     const diag = 2 * (W + H) / sc;
-    const drawObj = (o, stroke, width, dash) => {
-      if (o.kind === 'circle') el('circle', { cx: X(o.cx), cy: Y(o.cy), r: o.r * sc, fill: 'none', stroke, 'stroke-width': width, ...(dash ? { 'stroke-dasharray': dash } : {}) }, svg);
+    const drawObj = (o, stroke, width, dash, fill = 'none') => {
+      if (o.kind === 'circle') el('circle', { cx: X(o.cx), cy: Y(o.cy), r: o.r * sc, fill, stroke, 'stroke-width': width, ...(dash ? { 'stroke-dasharray': dash } : {}) }, svg);
       else el('line', { x1: X(o.x - diag * o.dx), y1: Y(o.y - diag * o.dy), x2: X(o.x + diag * o.dx), y2: Y(o.y + diag * o.dy), stroke, 'stroke-width': width, ...(dash ? { 'stroke-dasharray': dash } : {}) }, svg);
     };
+    const done = k === n;
+    const square = done ? answerSquare(con, R) : null;
+    if (square) {
+      el('polygon', {
+        points: square.map(p => `${X(p.x)},${Y(p.y)}`).join(' '),
+        fill: '#edf2f8',
+        stroke: '#9bb4d0',
+        'stroke-width': 1.4
+      }, svg);
+    }
     // objects: givens, then steps < k gray, step k-1 teal
     for (const rec of R.order) {
       const o = R.objs[rec.id];
-      if (rec.given) drawObj(o, '#777', rec.id === 'GAMMA' ? 2 : 1.4);
+      if (rec.given) drawObj(o, '#777', rec.id === 'GAMMA' ? 2 : 1.4, null, rec.id === 'GAMMA' ? '#f5f5f2' : 'none');
       else if (rec.step < k - 1) drawObj(o, '#d2d2d2', 1);
       else if (rec.step === k - 1) drawObj(o, '#245b9b', 1.8);
     }
     // answer segment at final step
-    const done = k === n;
     if (done) {
       const [a, b] = con.answer.p, p = R.pts[a], q = R.pts[b];
       el('line', { x1: X(p.x), y1: Y(p.y), x2: X(q.x), y2: Y(q.y), stroke: '#245b9b', 'stroke-width': 3.2, 'stroke-linecap': 'round' }, svg);
