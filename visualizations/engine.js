@@ -150,8 +150,8 @@ class Builder {
             <button class="btn next">Next</button>
             <span class="stepno"></span>
           </div>
-          <svg role="img"></svg>
           <div class="caption"></div>
+          <svg role="img"></svg>
           <div class="readout"></div>
           <div class="notes"></div>
         </div>

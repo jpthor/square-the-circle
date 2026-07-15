@@ -131,7 +131,7 @@ h1 { margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -.02em; }
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
 }
 .btn {
   padding: 4px 9px;
@@ -150,7 +150,7 @@ h1 { margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -.02em; }
   font-variant-numeric: tabular-nums;
 }
 
-.caption { margin-top: 9px; min-height: 38px; }
+.caption { margin: 0 0 8px; min-height: 38px; }
 .caption b { font-weight: 500; }
 .caption .cost { color: var(--muted); font-size: 14px; white-space: nowrap; }
 .readout {
