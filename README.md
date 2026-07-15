@@ -96,6 +96,18 @@ the record-breaking ones are lying around.
   and the search.
 - `results/` — full JSON payloads of the five workflow runs (audits + search),
   including every finding and verdict quoted above.
+- `visualizations/` — interactive web app (static, no dependencies: open
+  `index.html` or `python3 -m http.server --directory visualizations`). Hero:
+  the clickable strokes-vs-digits Pareto plot. Tabs: History (the problem and
+  its 3,600-year timeline), Existing solutions (step-through builders for
+  Kochański 1685, de Gelder 1849, Ramanujan 1913 and 1914), New solutions
+  (step-through builders for all six search constructions, both 355/113
+  constructions, and the 28-stroke high-accuracy variant). Every figure is
+  replayed live from raw intersections in the browser; the digits shown are
+  computed, not quoted, and a load-time self-test checks all 13 against the
+  audited values. Also contains the three standalone construction explainers
+  produced during review (`high-accuracy-`, `shorter-`, and
+  `ten-stroke-circle-square.html`).
 
 ## Caveats that must travel with the results
 

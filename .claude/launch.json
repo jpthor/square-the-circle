@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "squircle-app",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8763", "--directory", "visualizations"],
+      "port": 8763
+    }
+  ]
+}

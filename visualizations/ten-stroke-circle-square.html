@@ -1,0 +1,215 @@
+<div id="ten-stroke-circle-square">
+  <style>
+    #ten-stroke-circle-square {
+      width: 100%;
+    }
+    #ten-stroke-circle-square .tscs-controls {
+      margin-bottom: 10px;
+    }
+    #ten-stroke-circle-square .tscs-stage {
+      width: 100%;
+    }
+    #ten-stroke-circle-square .tscs-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    #ten-stroke-circle-square .tscs-object {
+      fill: none;
+      stroke: var(--muted-foreground);
+      stroke-width: 1.3;
+      vector-effect: non-scaling-stroke;
+      transition: opacity 180ms ease, stroke 180ms ease, stroke-width 180ms ease;
+    }
+    #ten-stroke-circle-square .tscs-object.is-past {
+      opacity: 0.34;
+    }
+    #ten-stroke-circle-square .tscs-object.is-current {
+      opacity: 1;
+      stroke: var(--viz-series-1);
+      stroke-width: 2.6;
+    }
+    #ten-stroke-circle-square .tscs-object.is-hidden,
+    #ten-stroke-circle-square [data-born].is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    #ten-stroke-circle-square .tscs-point {
+      fill: var(--foreground);
+      stroke: var(--background);
+      stroke-width: 1.4;
+      vector-effect: non-scaling-stroke;
+      transition: opacity 180ms ease;
+    }
+    #ten-stroke-circle-square .tscs-label {
+      fill: var(--foreground);
+      stroke: var(--background);
+      stroke-width: 3px;
+      paint-order: stroke;
+      font-size: calc(var(--font-size-base) * 0.78);
+      font-weight: 500;
+      transition: opacity 180ms ease;
+    }
+    #ten-stroke-circle-square .tscs-aux-label {
+      fill: var(--muted-foreground);
+      stroke: var(--background);
+      stroke-width: 3px;
+      paint-order: stroke;
+      font-size: calc(var(--font-size-base) * 0.7);
+      transition: opacity 180ms ease;
+    }
+    #ten-stroke-circle-square .tscs-output {
+      fill: none;
+      stroke: var(--viz-series-2);
+      stroke-width: 4;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+      transition: opacity 180ms ease;
+    }
+    #ten-stroke-circle-square .tscs-output-label {
+      fill: var(--foreground);
+      stroke: var(--background);
+      stroke-width: 4px;
+      paint-order: stroke;
+      font-size: calc(var(--font-size-base) * 0.78);
+      font-weight: 500;
+      transition: opacity 180ms ease;
+    }
+    #ten-stroke-circle-square .tscs-status {
+      min-height: 1.5em;
+      margin-top: 6px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #ten-stroke-circle-square .tscs-object,
+      #ten-stroke-circle-square .tscs-point,
+      #ten-stroke-circle-square .tscs-label,
+      #ten-stroke-circle-square .tscs-aux-label,
+      #ten-stroke-circle-square .tscs-output,
+      #ten-stroke-circle-square .tscs-output-label {
+        transition: none;
+      }
+    }
+  </style>
+
+  <div class="viz-controls tscs-controls" aria-label="Construction stroke">
+    <button type="button" class="btn btn-ghost" data-tscs-step="0" aria-pressed="false">Given</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="1" aria-pressed="false">1</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="2" aria-pressed="false">2</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="3" aria-pressed="false">3</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="4" aria-pressed="false">4</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="5" aria-pressed="false">5</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="6" aria-pressed="false">6</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="7" aria-pressed="false">7</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="8" aria-pressed="false">8</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="9" aria-pressed="false">9</button>
+    <button type="button" class="btn btn-ghost" data-tscs-step="10" aria-pressed="true">10</button>
+  </div>
+
+  <div class="tscs-stage">
+    <svg class="tscs-svg" viewBox="0 0 720 520" role="img" aria-labelledby="tscs-title tscs-desc">
+      <title id="tscs-title">Ten-stroke approximate squaring of the circle</title>
+      <desc id="tscs-desc">Step through five lines and five circles. The last circle creates R on the existing line AG, and the highlighted segment GR has square 3.14158894465.</desc>
+
+      <g transform="translate(280 300) scale(75 -75)">
+        <line class="tscs-object" data-stroke="1" x1="-3.15" y1="0" x2="3.15" y2="0" />
+        <circle class="tscs-object" data-stroke="2" cx="0" cy="0" r="1" />
+        <circle class="tscs-object" data-stroke="3" cx="1" cy="0" r="1" />
+        <line class="tscs-object" data-stroke="4" x1="0.5" y1="-2.15" x2="0.5" y2="2.25" />
+        <circle class="tscs-object" data-stroke="5" cx="-1" cy="0" r="2" />
+        <circle class="tscs-object" data-stroke="6" cx="1" cy="0" r="2" />
+        <line class="tscs-object" data-stroke="7" x1="0" y1="-2.15" x2="0" y2="2.25" />
+        <line class="tscs-object" data-stroke="8" x1="-0.55" y1="-2.1" x2="1.72" y2="2.44" />
+        <line class="tscs-object" data-stroke="9" x1="-0.72" y1="2.44" x2="1.36" y2="-1.72" />
+        <circle class="tscs-object" data-stroke="10" cx="-0.4633249581" cy="1.9266499161" r="1.7888543820" />
+
+        <line class="tscs-output" data-born="10" x1="0.5" y1="0" x2="1.2926649919" y2="1.5853299838" />
+
+        <circle class="tscs-point" data-born="0" cx="0" cy="0" r="0.045" />
+        <circle class="tscs-point" data-born="0" cx="1" cy="0" r="0.045" />
+        <circle class="tscs-point" data-born="2" cx="-1" cy="0" r="0.045" />
+        <circle class="tscs-point" data-born="3" cx="0.5" cy="0.8660254038" r="0.04" />
+        <circle class="tscs-point" data-born="3" cx="0.5" cy="-0.8660254038" r="0.04" />
+        <circle class="tscs-point" data-born="4" cx="0.5" cy="0" r="0.045" />
+        <circle class="tscs-point" data-born="6" cx="0" cy="1.7320508076" r="0.04" />
+        <circle class="tscs-point" data-born="6" cx="0" cy="-1.7320508076" r="0.04" />
+        <circle class="tscs-point" data-born="7" cx="0" cy="-1" r="0.045" />
+        <circle class="tscs-point" data-born="7" cx="0" cy="1" r="0.045" />
+        <circle class="tscs-point" data-born="8" cx="0.8633249581" cy="0.7266499161" r="0.045" />
+        <circle class="tscs-point" data-born="9" cx="-0.4633249581" cy="1.9266499161" r="0.045" />
+        <circle class="tscs-point" data-born="10" cx="1.2926649919" cy="1.5853299838" r="0.05" />
+      </g>
+
+      <g aria-hidden="true">
+        <text class="tscs-label" data-born="0" x="267" y="322">U</text>
+        <text class="tscs-label" data-born="0" x="361" y="322">N</text>
+        <text class="tscs-label" data-born="2" x="189" y="322">S</text>
+        <text class="tscs-aux-label" data-born="3" x="325" y="232">P</text>
+        <text class="tscs-aux-label" data-born="3" x="325" y="381">Q</text>
+        <text class="tscs-label" data-born="4" x="324" y="320">G</text>
+        <text class="tscs-label" data-born="7" x="264" y="397">A</text>
+        <text class="tscs-label" data-born="7" x="264" y="216">B</text>
+        <text class="tscs-label" data-born="8" x="351" y="248">J</text>
+        <text class="tscs-label" data-born="9" x="226" y="145">H</text>
+        <text class="tscs-label" data-born="10" x="386" y="178">R</text>
+        <text class="tscs-output-label" data-born="10" x="361" y="226">GR</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="text-small tscs-status" id="tscs-status" aria-live="polite">
+    Stroke 10: draw the circle centred at H through J; its other intersection R gives GR² = 3.14158894465 — 12.98× better than Beatrix with three fewer strokes.
+  </div>
+  <div class="sr-only" id="tscs-summary">
+    The construction starts from unit-separated points U and N. Five lines and five centre-through-point circles create a final segment GR whose square differs from pi by 3.70894 millionths.
+  </div>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById('ten-stroke-circle-square');
+  const buttons = [...root.querySelectorAll('[data-tscs-step]')];
+  const objects = [...root.querySelectorAll('[data-stroke]')];
+  const bornMarks = [...root.querySelectorAll('[data-born]')];
+  const status = root.querySelector('#tscs-status');
+
+  const descriptions = [
+    'Given: U and N are one unit apart.',
+    'Stroke 1: draw line UN.',
+    'Stroke 2: draw the unit circle centred at U; S is the opposite point on UN.',
+    'Stroke 3: draw the unit circle centred at N; intersections P and Q appear.',
+    'Stroke 4: join P and Q; this line meets UN at its midpoint G.',
+    'Stroke 5: draw the circle centred at S through N.',
+    'Stroke 6: draw the circle centred at N through S.',
+    'Stroke 7: join the intersections of the two large circles; the unit circle supplies A and B.',
+    'Stroke 8: draw AG; take J where it meets the large circle beyond G.',
+    'Stroke 9: draw BG; take H where it meets the large circle beyond B.',
+    'Stroke 10: draw the circle centred at H through J; its other intersection R gives GR² = 3.14158894465 — 12.98× better than Beatrix with three fewer strokes.'
+  ];
+
+  function showStep(step) {
+    objects.forEach((object) => {
+      const stroke = Number(object.dataset.stroke);
+      object.classList.toggle('is-hidden', stroke > step);
+      object.classList.toggle('is-past', stroke < step);
+      object.classList.toggle('is-current', stroke === step);
+    });
+
+    bornMarks.forEach((mark) => {
+      mark.classList.toggle('is-hidden', Number(mark.dataset.born) > step);
+    });
+
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(Number(button.dataset.tscsStep) === step));
+    });
+
+    status.textContent = descriptions[step];
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => showStep(Number(button.dataset.tscsStep)));
+  });
+
+  showStep(10);
+})();
+</script>

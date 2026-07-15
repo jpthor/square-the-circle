@@ -1,0 +1,252 @@
+<div id="circle-square-pareto-all">
+  <div class="viz-row text-small" aria-label="Legend">
+    <span class="pareto-key"><span class="pareto-swatch pareto-candidate"></span>Candidate</span>
+    <span class="pareto-key"><span class="pareto-swatch pareto-other"></span>Other author</span>
+    <span class="pareto-key"><span class="pareto-swatch pareto-conditional"></span>Rigid-transfer or tangency count</span>
+  </div>
+  <svg class="pareto-chart" role="img" aria-labelledby="pareto-title pareto-desc"></svg>
+  <div class="text-small pareto-note">Blue packet candidates use the supplied circle and axis; hollow marks also rely on rigid transfer or tangency.</div>
+  <div class="text-small pareto-note">Not plotted: Ramanujan 1913 and the high-accuracy extension, because neither has an audited primitive stroke count.</div>
+</div>
+
+<style>
+  #circle-square-pareto-all {
+    width: 100%;
+    color: var(--foreground);
+    background: transparent;
+  }
+
+  #circle-square-pareto-all .pareto-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  #circle-square-pareto-all .pareto-swatch {
+    display: inline-block;
+    width: 0.72em;
+    height: 0.72em;
+    border-radius: 50%;
+    flex: 0 0 auto;
+  }
+
+  #circle-square-pareto-all .pareto-candidate {
+    background: var(--viz-series-1);
+    border: 1px solid var(--viz-series-1);
+  }
+
+  #circle-square-pareto-all .pareto-other {
+    background: var(--muted-foreground);
+    border: 1px solid var(--muted-foreground);
+  }
+
+  #circle-square-pareto-all .pareto-conditional {
+    background: var(--background);
+    border: 2px solid var(--viz-series-1);
+  }
+
+  #circle-square-pareto-all .pareto-chart {
+    display: block;
+    width: 100%;
+    overflow: visible;
+  }
+
+  #circle-square-pareto-all .pareto-grid {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  #circle-square-pareto-all .pareto-axis {
+    stroke: var(--muted-foreground);
+    stroke-width: 1;
+  }
+
+  #circle-square-pareto-all .pareto-tick,
+  #circle-square-pareto-all .pareto-axis-label {
+    fill: var(--muted-foreground);
+    font-size: max(11px, calc(var(--font-size-base) * 0.82));
+    font-weight: 400;
+  }
+
+  #circle-square-pareto-all .pareto-axis-label {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+
+  #circle-square-pareto-all .pareto-label {
+    fill: var(--foreground);
+    stroke: var(--background);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    font-size: max(11px, calc(var(--font-size-base) * 0.82));
+    font-weight: 500;
+  }
+
+  #circle-square-pareto-all .pareto-leader-candidate {
+    stroke: var(--viz-series-1);
+    stroke-width: 1;
+    opacity: 0.65;
+  }
+
+  #circle-square-pareto-all .pareto-leader-other {
+    stroke: var(--muted-foreground);
+    stroke-width: 1;
+    opacity: 0.7;
+  }
+
+  #circle-square-pareto-all .pareto-point-candidate {
+    fill: var(--viz-series-1);
+    stroke: var(--background);
+    stroke-width: 2;
+  }
+
+  #circle-square-pareto-all .pareto-point-conditional {
+    fill: var(--background);
+    stroke: var(--viz-series-1);
+    stroke-width: 2.5;
+  }
+
+  #circle-square-pareto-all .pareto-point-other {
+    fill: var(--muted-foreground);
+    stroke: var(--background);
+    stroke-width: 2;
+  }
+
+  #circle-square-pareto-all .pareto-note {
+    margin-top: 0.35rem;
+  }
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('circle-square-pareto-all');
+  const svg = root.querySelector('.pareto-chart');
+  const NS = 'http://www.w3.org/2000/svg';
+
+  const points = [
+    { id: 'c1', x: 4, y: 4.4153815801, label: '#1 tangent · 4 / 4.42', type: 'candidate', conditional: true, wide: [12, -13, 'start'] },
+    { id: 'c2', x: 5, y: 6.2418087385, label: '#2 · 5 / 6.24', type: 'candidate', conditional: true, wide: [12, -13, 'start'] },
+    { id: 'c3', x: 6, y: 7.3682252027, label: '#3 pure · 6 / 7.37', type: 'candidate', conditional: false, wide: [12, -15, 'start'] },
+    { id: 'c4', x: 7, y: 8.0484053921, label: '#4 pure · 7 / 8.05', type: 'candidate', conditional: false, wide: [15, -27, 'start'] },
+    { id: 'c5', x: 8, y: 8.1721012698, label: '#5 · 8 / 8.17', type: 'candidate', conditional: true, wide: [105, 16, 'start'] },
+    { id: 'c6', x: 9, y: 8.9850001367, label: '#6 · 9 / 8.99', type: 'candidate', conditional: true, wide: [12, -15, 'start'] },
+    { id: 'c10', x: 10, y: 5.4307506644, label: 'Earlier 10 · 5.43', type: 'candidate', conditional: false, wide: [13, 20, 'start'] },
+    { id: 'base15', x: 15, y: 6.5738724714, label: 'Base / your 15 · 6.57', type: 'candidate', conditional: false, wide: [13, -12, 'start'] },
+    { id: 'beatrix', x: 13, y: 4.3175578804, label: 'Beatrix 2022 · 13 / 4.32', type: 'other', conditional: false, wide: [13, 23, 'start'] },
+    { id: 'dixon', x: 25, y: 4.3175578804, label: 'Chu/Dixon 2019 · 25 / 4.32', type: 'other', conditional: false, wide: [11, -13, 'start'] },
+    { id: 'ramanujan14', x: 58, y: 8.9969070877, label: 'Ramanujan 1914 · 58 / 9.00', type: 'other', conditional: false, wide: [-12, 22, 'end'] },
+    { id: 'chu-high', x: 68, y: 9.6657574891, label: 'Chu 2019 · ≥68 / 9.67', type: 'other', conditional: false, wide: [-12, -13, 'end'] }
+  ];
+
+  const narrowLabels = {
+    c1: [80, 575, 'start'],
+    c2: [82, 445, 'start'],
+    c3: [94, 327, 'start'],
+    c4: [94, 282, 'start'],
+    c5: [94, 245, 'start'],
+    c6: [94, 168, 'start'],
+    c10: [98, 505, 'start'],
+    base15: [112, 398, 'start'],
+    beatrix: [100, 603, 'start'],
+    dixon: ['right', 631, 'end'],
+    ramanujan14: ['right', 202, 'end'],
+    'chu-high': ['right', 101, 'end']
+  };
+
+  function node(name, attrs = {}, text = '') {
+    const item = document.createElementNS(NS, name);
+    Object.entries(attrs).forEach(([key, value]) => item.setAttribute(key, String(value)));
+    if (text) item.textContent = text;
+    return item;
+  }
+
+  function draw() {
+    const width = Math.max(300, Math.round(root.getBoundingClientRect().width));
+    const narrow = width < 560;
+    const height = narrow ? 720 : 530;
+    const margin = narrow
+      ? { top: 78, right: 12, bottom: 78, left: 44 }
+      : { top: 42, right: 28, bottom: 80, left: 56 };
+    const plotWidth = width - margin.left - margin.right;
+    const plotHeight = height - margin.top - margin.bottom;
+    const xScale = value => margin.left + (value / 72) * plotWidth;
+    const yScale = value => margin.top + ((10.1 - value) / 6.1) * plotHeight;
+
+    svg.replaceChildren();
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('height', String(height));
+
+    svg.appendChild(node('title', { id: 'pareto-title' }, 'Stroke count versus effective digits of pi'));
+    svg.appendChild(node('desc', { id: 'pareto-desc' }, 'Scatterplot with candidate constructions in blue and other authors in grey. Hollow blue points use a rigid-transfer or tangency-dependent count.'));
+
+    const grid = node('g');
+    for (let y = 4; y <= 10; y += 1) {
+      const py = yScale(y);
+      grid.appendChild(node('line', { x1: margin.left, y1: py, x2: width - margin.right, y2: py, class: 'pareto-grid' }));
+      grid.appendChild(node('text', { x: margin.left - 9, y: py + 4, 'text-anchor': 'end', class: 'pareto-tick' }, String(y)));
+    }
+    for (let x = 0; x <= 70; x += 10) {
+      const px = xScale(x);
+      grid.appendChild(node('line', { x1: px, y1: margin.top, x2: px, y2: height - margin.bottom, class: 'pareto-grid' }));
+      grid.appendChild(node('text', { x: px, y: height - margin.bottom + 21, 'text-anchor': 'middle', class: 'pareto-tick' }, String(x)));
+    }
+    svg.appendChild(grid);
+
+    const axes = node('g');
+    axes.appendChild(node('line', { x1: margin.left, y1: height - margin.bottom, x2: width - margin.right, y2: height - margin.bottom, class: 'pareto-axis' }));
+    axes.appendChild(node('line', { x1: margin.left, y1: margin.top, x2: margin.left, y2: height - margin.bottom, class: 'pareto-axis' }));
+    axes.appendChild(node('text', { x: margin.left + plotWidth / 2, y: height - 24, 'text-anchor': 'middle', class: 'pareto-axis-label' }, 'Strokes'));
+    axes.appendChild(node('text', {
+      x: narrow ? 14 : 18,
+      y: margin.top + plotHeight / 2,
+      transform: `rotate(-90 ${narrow ? 14 : 18} ${margin.top + plotHeight / 2})`,
+      'text-anchor': 'middle',
+      class: 'pareto-axis-label'
+    }, 'Effective digits of π'));
+    svg.appendChild(axes);
+
+    const marks = node('g');
+    points.forEach(point => {
+      const px = xScale(point.x);
+      const py = yScale(point.y);
+      let lx;
+      let ly;
+      let anchor;
+
+      if (narrow) {
+        const layout = narrowLabels[point.id];
+        lx = layout[0] === 'right' ? width - 14 : layout[0];
+        ly = layout[1];
+        anchor = layout[2];
+      } else {
+        lx = px + point.wide[0];
+        ly = py + point.wide[1];
+        anchor = point.wide[2];
+      }
+
+      const leaderEndX = anchor === 'end' ? lx + 5 : lx - 5;
+      marks.appendChild(node('line', {
+        x1: px,
+        y1: py,
+        x2: leaderEndX,
+        y2: ly - 4,
+        class: point.type === 'candidate' ? 'pareto-leader-candidate' : 'pareto-leader-other'
+      }));
+
+      const pointClass = point.type === 'other'
+        ? 'pareto-point-other'
+        : point.conditional
+          ? 'pareto-point-conditional'
+          : 'pareto-point-candidate';
+      marks.appendChild(node('circle', { cx: px, cy: py, r: 5.5, class: pointClass }));
+      marks.appendChild(node('text', { x: lx, y: ly, 'text-anchor': anchor, class: 'pareto-label' }, point.label));
+    });
+    svg.appendChild(marks);
+  }
+
+  const observer = new ResizeObserver(draw);
+  observer.observe(root);
+  draw();
+})();
+</script>

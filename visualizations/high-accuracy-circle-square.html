@@ -1,0 +1,240 @@
+<div id="high-accuracy-circle-square" style="display:grid;gap:12px;width:100%;">
+  <style>
+    #high-accuracy-circle-square .hac-stage {
+      display:grid;
+      grid-template-columns:minmax(0,2fr) minmax(190px,1fr);
+      gap:16px;
+      align-items:center;
+    }
+    #high-accuracy-circle-square .hac-details {
+      min-width:0;
+      display:grid;
+      gap:10px;
+      align-content:center;
+    }
+    #high-accuracy-circle-square .hac-equation {
+      color:var(--foreground);
+      font-weight:500;
+    }
+    #high-accuracy-circle-square .hac-svg .structure {
+      fill:none;
+      stroke:var(--border);
+      stroke-width:1.5;
+      vector-effect:non-scaling-stroke;
+    }
+    #high-accuracy-circle-square .hac-svg .guide {
+      fill:none;
+      stroke:var(--muted-foreground);
+      stroke-width:1.5;
+      vector-effect:non-scaling-stroke;
+    }
+    #high-accuracy-circle-square .hac-svg .active-a {
+      fill:none;
+      stroke:var(--viz-series-1);
+      stroke-width:3;
+      vector-effect:non-scaling-stroke;
+    }
+    #high-accuracy-circle-square .hac-svg .active-b {
+      fill:none;
+      stroke:var(--viz-series-2);
+      stroke-width:2.5;
+      vector-effect:non-scaling-stroke;
+    }
+    #high-accuracy-circle-square .hac-svg .active-c {
+      fill:none;
+      stroke:var(--viz-series-3);
+      stroke-width:2.5;
+      vector-effect:non-scaling-stroke;
+    }
+    #high-accuracy-circle-square .hac-svg .point {
+      fill:var(--background);
+      stroke:var(--foreground);
+      stroke-width:1.5;
+      vector-effect:non-scaling-stroke;
+    }
+    #high-accuracy-circle-square .hac-svg text {
+      fill:var(--foreground);
+      font-size:calc(var(--font-size-base) * 1.15);
+      font-weight:500;
+    }
+    #high-accuracy-circle-square .hac-svg .muted-label {
+      fill:var(--muted-foreground);
+      font-weight:400;
+    }
+    #high-accuracy-circle-square [data-step],
+    #high-accuracy-circle-square [data-panel] {
+      transition:opacity 180ms ease;
+    }
+    @media (max-width:600px) {
+      #high-accuracy-circle-square .hac-stage {
+        grid-template-columns:1fr;
+      }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      #high-accuracy-circle-square [data-step],
+      #high-accuracy-circle-square [data-panel] {
+        transition:none;
+      }
+    }
+  </style>
+
+  <div class="viz-controls" aria-label="High-accuracy construction step">
+    <button type="button" class="btn btn-ghost" data-step-button="1" aria-label="Step 1, Ramanujan side">1</button>
+    <button type="button" class="btn btn-ghost" data-step-button="2" aria-label="Step 2, construct eleven-halves baseline">2</button>
+    <button type="button" class="btn btn-ghost" data-step-button="3" aria-label="Step 3, first division by forty-four">3</button>
+    <button type="button" class="btn btn-ghost" data-step-button="4" aria-label="Step 4, second division by forty-four">4</button>
+    <button type="button" class="btn btn-ghost" data-step-button="5" aria-label="Step 5, transfer correction">5</button>
+    <button type="button" class="btn btn-primary" data-step-button="6" aria-label="Step 6, corrected output" aria-pressed="true">6</button>
+    <span class="text-small text-muted" id="hac-step-label" aria-live="polite">Subtract the tiny squared leg to obtain the corrected side JL.</span>
+  </div>
+
+  <div class="hac-stage">
+    <svg class="hac-svg" viewBox="60 0 610 430" role="img" aria-labelledby="hac-title hac-desc" style="display:block;width:100%;height:auto;">
+      <title id="hac-title">Interactive high-accuracy circle-squaring correction</title>
+      <desc id="hac-desc">The diagram begins with a side whose square is 355 over 113 times the radius squared. Two similar-triangle reductions construct r divided by 44 squared. That tiny length becomes one leg of a right triangle whose hypotenuse is the original side, producing the corrected side.</desc>
+
+      <g data-step="1">
+        <circle class="structure" cx="500" cy="330" r="90" />
+        <line class="guide" x1="365" y1="330" x2="625" y2="330" />
+        <line class="guide" x1="500" y1="174.115" x2="500" y2="330" />
+        <line class="active-a" x1="500" y1="174.115" x2="533.866" y2="330" />
+
+        <circle class="point" cx="500" cy="174.115" r="4" />
+        <circle class="point" cx="500" cy="330" r="4" />
+        <circle class="point" cx="533.866" cy="330" r="4" />
+        <text x="485" y="160">W</text>
+        <text class="muted-label" x="455" y="245">√3r</text>
+      </g>
+
+      <g data-step="2">
+        <line class="guide" x1="95" y1="330" x2="590" y2="330" />
+        <circle class="structure" cx="230" cy="330" r="135" opacity="0.58" />
+        <line class="guide" x1="95" y1="376" x2="590" y2="376" />
+        <line class="guide" x1="95" y1="366" x2="95" y2="386" />
+        <line class="guide" x1="590" y1="366" x2="590" y2="386" />
+
+        <circle class="point" cx="95" cy="330" r="4" />
+        <circle class="point" cx="230" cy="330" r="4" />
+        <circle class="point" cx="410" cy="330" r="4" />
+        <circle class="point" cx="545" cy="330" r="4" />
+        <circle class="point" cx="578.75" cy="330" r="4" />
+        <circle class="point" cx="590" cy="330" r="4" />
+        <text x="84" y="353">D</text>
+        <text x="218" y="353">E</text>
+        <text x="398" y="353">P</text>
+        <text x="536" y="306">X</text>
+        <text x="566" y="370">G</text>
+        <text x="595" y="353">B</text>
+        <text class="muted-label" x="292" y="404">BD = 11r/2</text>
+      </g>
+
+      <g data-step="3">
+        <line class="active-b" x1="590" y1="330" x2="590" y2="240" />
+        <line class="active-b" x1="95" y1="330" x2="590" y2="240" />
+        <line class="active-c" x1="578.75" y1="330" x2="590" y2="327.955" />
+        <circle class="point" cx="590" cy="240" r="4" />
+        <circle class="point" cx="590" cy="327.955" r="4" />
+        <text x="597" y="235">C</text>
+        <line class="guide" x1="590" y1="327.955" x2="630" y2="286" />
+        <text x="633" y="286">U</text>
+      </g>
+
+      <g data-step="4">
+        <line class="active-b" x1="95" y1="330" x2="590" y2="327.955" />
+        <line class="active-c" x1="578.75" y1="330" x2="590" y2="329.954" />
+        <circle class="point" cx="590" cy="329.954" r="4" />
+        <line class="guide" x1="590" y1="329.954" x2="640" y2="318" />
+        <text x="643" y="320">V</text>
+      </g>
+
+      <g data-step="5">
+        <circle class="structure" cx="500" cy="174.115" r="159.515" opacity="0.58" />
+        <line class="active-c" x1="335" y1="174.161" x2="665" y2="174.161" />
+        <circle class="point" cx="500" cy="174.161" r="4" />
+        <text class="muted-label" x="535" y="156">WJ = r/1936</text>
+      </g>
+
+      <g data-step="6">
+        <line class="active-a" x1="340.485" y1="174.161" x2="500" y2="174.161" />
+        <circle class="point" cx="340.485" cy="174.161" r="4" />
+        <text x="324" y="165">L</text>
+      </g>
+    </svg>
+
+    <div class="hac-details" aria-live="polite">
+      <div data-panel="1">
+        <div class="hac-equation">WI² = (355/113)r²</div>
+        <div class="text-small text-muted">Start from the compact construction’s approximate side.</div>
+      </div>
+      <div data-panel="2">
+        <div class="hac-equation">BE = 4r</div>
+        <div class="hac-equation">PX = 3r/2</div>
+        <div class="hac-equation">BD = 11r/2</div>
+      </div>
+      <div data-panel="3">
+        <div class="hac-equation">△BGU ∼ △BDC</div>
+        <div class="hac-equation">BG/BD = (r/8)/(11r/2) = 1/44</div>
+        <div class="hac-equation">BU = r/44</div>
+      </div>
+      <div data-panel="4">
+        <div class="hac-equation">△BGV ∼ △BDU</div>
+        <div class="hac-equation">BV/BU = 1/44</div>
+        <div class="hac-equation">BV = r/44² = r/1936</div>
+        <div class="text-small text-muted">V is almost coincident with B at true scale.</div>
+      </div>
+      <div data-panel="5">
+        <div class="hac-equation">WJ = BV = r/1936</div>
+        <div class="hac-equation">JL ∥ OB</div>
+        <div class="text-small text-muted">The separation WJ is too small to resolve at this scale.</div>
+      </div>
+      <div data-panel="6">
+        <div class="hac-equation">WL = WI</div>
+        <div class="hac-equation">JL² = WI² − WJ²</div>
+        <div class="hac-equation">JL²/r² = 355/113 − 1/44⁴</div>
+        <div class="text-small text-muted">Relative side error: −6.039 × 10⁻¹².</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sr-only" id="hac-summary">Step 1 starts with the 355 over 113 side. Step 2 constructs a baseline of eleven halves of the radius. Step 3 uses similar triangles to divide the radius by 44. Step 4 repeats the similarity to obtain the radius divided by 1936. Step 5 transfers this tiny correction perpendicular to the original approximate side. Step 6 uses a right triangle to subtract its square and produces the corrected side.</div>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById('high-accuracy-circle-square');
+  const status = root.querySelector('#hac-step-label');
+  const buttons = [...root.querySelectorAll('[data-step-button]')];
+  const marks = [...root.querySelectorAll('[data-step]')];
+  const panels = [...root.querySelectorAll('[data-panel]')];
+  const labels = [
+    'Begin with WI²/r² = 355/113.',
+    'Construct BD = 11r/2 from existing points.',
+    'The first similarity produces BU = r/44.',
+    'Repeat the ratio to produce BV = r/1936.',
+    'Transfer BV to the perpendicular leg WJ.',
+    'Subtract the tiny squared leg to obtain the corrected side JL.'
+  ];
+
+  function showStep(step) {
+    marks.forEach(mark => {
+      const visible = Number(mark.dataset.step) <= step;
+      mark.style.display = visible ? '' : 'none';
+    });
+    panels.forEach(panel => {
+      panel.style.display = Number(panel.dataset.panel) === step ? '' : 'none';
+    });
+    buttons.forEach(button => {
+      const active = Number(button.dataset.stepButton) === step;
+      button.classList.toggle('btn-primary', active);
+      button.classList.toggle('btn-ghost', !active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    status.textContent = labels[step - 1];
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => showStep(Number(button.dataset.stepButton)));
+  });
+  showStep(6);
+})();
+</script>
