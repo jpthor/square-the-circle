@@ -291,14 +291,20 @@ function drawPlot(container, data, onPick) {
   const tip = document.createElement('div'); tip.className = 'plot-tip'; document.body.appendChild(tip);
   const col = { pub: '#888', f5: '#245b9b', sol: '#245b9b' };
   for (const p of data) {
-    if (p.span) el('line', { x1: X(p.span[0]), y1: Y(p.d), x2: X(p.span[1]), y2: Y(p.d), stroke: col[p.c], 'stroke-width': 1.5, opacity: 0.55 }, svg);
+    if (p.span) {
+      const x1 = X(p.span[0]), x2 = X(p.span[1]), y = Y(p.d);
+      el('line', { x1, y1: y, x2, y2: y, stroke: col[p.c], 'stroke-width': 1.3, opacity: 0.7 }, svg);
+      el('line', { x1, y1: y - 4, x2: x1, y2: y + 4, stroke: col[p.c], 'stroke-width': 1.3 }, svg);
+      el('line', { x1: x2, y1: y - 4, x2, y2: y + 4, stroke: col[p.c], 'stroke-width': 1.3 }, svg);
+    }
     const dot = el('circle', {
       cx: X(p.s), cy: Y(p.d), r: 5.5, fill: col[p.c],
       style: p.cid ? 'cursor:pointer' : '',
-      ...(p.cid ? { tabindex: 0, role: 'button', 'aria-label': `${p.l}: ${p.s} strokes, ${p.d} digits` } : {})
+      ...(p.cid ? { tabindex: 0, role: 'button', 'aria-label': `${p.l}: ${p.span ? `${p.span[0]}–${p.span[1]}` : p.s} strokes, ${p.d} digits` } : {})
     }, svg);
     dot.addEventListener('mousemove', e => {
-      tip.textContent = `${p.l} — ${p.s}${p.span ? '–' + p.span[1] : ''} strokes, ${p.d} digits${p.cid ? ' (click to open)' : ''}`;
+      const strokes = p.span ? `${p.span[0]}–${p.span[1]}` : p.s;
+      tip.textContent = `${p.l} — ${strokes} strokes, ${p.d} digits${p.cid ? ' (click to open)' : ''}`;
       tip.style.left = (e.clientX + 14) + 'px'; tip.style.top = (e.clientY - 10) + 'px'; tip.style.opacity = 1;
     });
     dot.addEventListener('mouseleave', () => tip.style.opacity = 0);

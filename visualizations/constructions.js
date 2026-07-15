@@ -538,7 +538,7 @@ const CONS = [
 const PLOT_DATA = [
   { c: 'pub', s: 9,  d: 4.23, l: 'Kochański 1685 (length)', short: 'Kochański 1685', cid: 'koch', dy: 18 },
   { c: 'pub', s: 13, d: 4.32, l: 'Beatrix 2022 (published record)', short: 'Beatrix 2022' },
-  { c: 'pub', s: 24, d: 6.57, span: [24, 38], l: 'Ramanujan 1913', short: 'Ramanujan 1913', cid: 'ram1913' },
+  { c: 'pub', s: 30.2, d: 6.57, span: [24, 38], l: 'Ramanujan 1913', short: 'Ramanujan 1913 · 24–38', cid: 'ram1913' },
   { c: 'pub', s: 58, d: 9.0,  l: 'Ramanujan 1914 (8 decimal places)', short: 'Ramanujan 1914', cid: 'ram1914', dx: -8, anchor: 'end' },
   { c: 'pub', s: 68, d: 9.0,  l: 'Chu 2019 (≥68 strokes)', short: 'Chu 2019', dx: -2, dy: 18, anchor: 'end' },
   { c: 'f5', s: 4, d: 4.42, l: 'Search — 4-stroke', short: '4-stroke', cid: 'f5-4', frontier: true },
