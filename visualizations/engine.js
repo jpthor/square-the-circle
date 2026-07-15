@@ -127,13 +127,12 @@ function el(tag, attrs, parent) {
 function answerSquare(con, R) {
   if (con.answer.kind !== 'side') return null;
   const [a, b] = con.answer.p, p = R.pts[a], q = R.pts[b];
-  const vx = q.x - p.x, vy = q.y - p.y;
-  const mid = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 };
-  const gamma = R.objs.GAMMA;
-  const normals = [{ x: -vy, y: vx }, { x: vy, y: -vx }];
-  const score = n => Math.hypot(mid.x + n.x / 2 - gamma.cx, mid.y + n.y / 2 - gamma.cy);
-  const n = score(normals[0]) >= score(normals[1]) ? normals[0] : normals[1];
-  return [p, q, { x: q.x + n.x, y: q.y + n.y }, { x: p.x + n.x, y: p.y + n.y }];
+  const h = dist(p, q) / 2;
+  const { cx, cy } = R.objs.GAMMA;
+  return [
+    { x: cx - h, y: cy - h }, { x: cx + h, y: cy - h },
+    { x: cx + h, y: cy + h }, { x: cx - h, y: cy + h }
+  ];
 }
 
 function bounds(R, con) {
@@ -227,20 +226,23 @@ class Builder {
     };
     const done = k === n;
     const square = done ? answerSquare(con, R) : null;
-    if (square) {
-      el('polygon', {
-        points: square.map(p => `${X(p.x)},${Y(p.y)}`).join(' '),
-        fill: '#edf2f8',
-        stroke: '#9bb4d0',
-        'stroke-width': 1.4
-      }, svg);
-    }
     // objects: givens, then steps < k gray, step k-1 teal
     for (const rec of R.order) {
       const o = R.objs[rec.id];
       if (rec.given) drawObj(o, '#777', rec.id === 'GAMMA' ? 2 : 1.4, null, rec.id === 'GAMMA' ? '#f5f5f2' : 'none');
       else if (rec.step < k - 1) drawObj(o, '#d2d2d2', 1);
       else if (rec.step === k - 1) drawObj(o, '#245b9b', 1.8);
+    }
+    if (square) {
+      el('polygon', {
+        points: square.map(p => `${X(p.x)},${Y(p.y)}`).join(' '),
+        fill: '#dce7f3',
+        'fill-opacity': 0.58,
+        stroke: '#7f9fbe',
+        'stroke-width': 1.6
+      }, svg);
+      const gamma = R.objs.GAMMA;
+      el('circle', { cx: X(gamma.cx), cy: Y(gamma.cy), r: gamma.r * sc, fill: 'none', stroke: '#777', 'stroke-width': 2 }, svg);
     }
     // answer segment at final step
     if (done) {
