@@ -1,0 +1,251 @@
+{
+  "summary": "Search for a compass-and-straightedge squaring construction that dominates Beatrix 2022 (13 strokes, 4.3 digits of pi)",
+  "agentCount": 8,
+  "logs": [
+    "[design:shave-cg14] failed: API Error: Claude's response exceeded the 64000 output token maximum. To configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable.",
+    "Design phase: 12 candidates, 12 claimed winners"
+  ],
+  "result": {
+    "winners": [
+      {
+        "candidate": {
+          "name": "nine_stroke_champion",
+          "s_squared_exact": "735/128 + (-3150*sqrt(3) - 84*sqrt(-385*sqrt(5) - 85*sqrt(2)*sqrt(-1+5*sqrt(5)) + 90*sqrt(10)*sqrt(-1+5*sqrt(5)) + 1195) - 135*sqrt(-30+150*sqrt(5)) - 46*sqrt(300-90*sqrt(3)) - 105*sqrt(-2+10*sqrt(5)) - 90*sqrt(15) - 6*sqrt(15)*sqrt(-1+5*sqrt(5))*sqrt(10-3*sqrt(3)) + 30*sqrt(60-18*sqrt(3)) + 45*sqrt(-6+30*sqrt(5)) + 210*sqrt(5) + 90*sqrt(3)*sqrt(-1+5*sqrt(5))*sqrt(10-3*sqrt(3)) + 20*sqrt(6)*sqrt(10-3*sqrt(3))*sqrt(-77*sqrt(5) - 17*sqrt(2)*sqrt(-1+5*sqrt(5)) + 18*sqrt(10)*sqrt(-1+5*sqrt(5)) + 239) + 36*sqrt(-1155*sqrt(5) - 255*sqrt(2)*sqrt(-1+5*sqrt(5)) + 270*sqrt(10)*sqrt(-1+5*sqrt(5)) + 3585) + 315*sqrt(-10+50*sqrt(5)))/1280 = 3.14159265462493507941301872844999850822 (|s^2-pi| = 1.035e-9)",
+          "digits_of_pi": 8.985,
+          "strokes": 9,
+          "stroke_list": [
+            "1. c1 = circle(B, |OB|=1); free: D=(2,0)=c1∩axis, V+=(1/2,√3/2) and V-=(1/2,-√3/2) = c1∩Γ",
+            "2. c2 = circle(P, |V+V-|=√3) [rigid-compass transfer]; free: F=(√3-1, 0)=c2∩axis",
+            "3. c3 = circle(B, |FV-|) with |FV-|^2 = 6-3√3 [transfer]; free: E1 = c3∩c2 (upper) ≈ (0.54903811, 0.77490706)",
+            "4. c4 = circle(P, |PB|=2); free: G=(3/4, √15/4) = c1∩c4 (upper)",
+            "5. c5 = circle(B, |PB|=2); free: R=(3,0)=c5∩axis",
+            "6. l6 = line(D, V+); free: L = l6∩c4 (upper left) ≈ (-0.42705098, 1.40125854)",
+            "7. c7 = circle(G, |DR|=1) [transfer]; free: H=(-1/4, √15/4)=c7∩Γ, K = l6∩c7 (lower right) ≈ (1.48928994, 0.29485859)",
+            "8. c8 = circle(H, |KL|), |KL|^2 = 4.89648... [transfer]; free: E2 = c8∩c1 (lower) ≈ (0.79969498, -0.97973359)",
+            "9. l9 = line E1E2 (the answer segment itself; endpoints not on any previously drawn line, so +1 stroke)",
+            "s = |E1E2| ≈ 1.77245385... , s^2 = 3.1415926546249..."
+          ],
+          "why_valid": "9 strokes = 8 drawn objects + 1 final segment line; every circle has constructed center and radius equal to a distance between two already-constructed points (all transfers listed); every line passes through two already-constructed points; all other points are free intersections. Verified by 4 independent computations: float64 search simulation, independent mpmath replay at 80 and 130 dps with per-stroke legality checks (dependency order, real intersections, branch matching), and sympy exact radical arithmetic reproducing s^2 to 35 digits. 9 <= 13 strokes and 8.985 > 4.32 digits: dominates Beatrix by 4.7 digits with 4 strokes to spare.",
+          "confidence": "verified-by-me-numerically",
+          "src": ""
+        },
+        "verification": {
+          "verdict": "valid-with-caveats",
+          "true_strokes": 9,
+          "true_digits": 8.985,
+          "findings": [
+            "Independent mpmath replay (/tmp/beat13-v0/verify.py, 60 and 140 dps, cross-precision agreement 3e-61) reproduces the construction end-to-end: s^2 = 3.141592654624935079413018728449998508222, matching the claimed decimal to all 36 quoted digits; |s^2 - pi| = 1.035142e-9, digits = 8.98500014. Claimed 8.985 is correct, not inflated.",
+            "Stroke count independently confirmed at 9. Every circle has a constructed center and radius equal to a distance between two already-constructed points (transfers at strokes 2,3,7,8 are each 1 stroke under the rigid-compass metric); l6 passes through two constructed points (D, V+); every named point is a free intersection of drawn objects (Gamma and the diameter line are given). Dependency order is correct throughout: no point is used before it exists, no glossed sub-constructions (no hidden parallels/perpendiculars/midpoints).",
+            "The +1 for the final segment (stroke 9) is correctly counted: E1=(3(sqrt3-1)/4, sqrt((10-3sqrt3)/8)) and E2 do not both lie on either drawn line (axis or l6), so the line E1E2 costs a stroke and the candidate charged it.",
+            "CAVEAT (description error, not a legality error): stroke 6 text defines L as 'l6 ∩ c4 (upper left)', but the quoted coordinates (-0.42705098, 1.40125854), the quoted |KL|^2 = 4.89648..., and the final s^2 all correspond exactly to L = l6 ∩ c5, upper-left branch, L_x = (5-3sqrt5)/4. The literal c4 reading is infeasible: its upper-left branch ((-1-sqrt21)/4, 1.9605) makes stroke 8 impossible (c1 lies strictly inside c8: center distance 1.581 < |r8 - r1| = 2.331, no intersection), and the other c4 branch yields s^2 = 0.0187 or 0.4037 - nowhere near pi. Reading 'c4' as a typo for 'c5' makes everything consistent and fully legal (c5 is drawn at stroke 5, before l6 at stroke 6), with no change to the stroke count.",
+            "Key intersections verified exactly: V+- = (1/2, +-sqrt3/2); F = (sqrt3-1, 0); |FV-|^2 = 6-3sqrt3 as claimed; G = (3/4, sqrt15/4); R = (3,0); |DR| = 1; H = (-1/4, sqrt15/4) (the non-B intersection of c7 and Gamma); K = larger root of 8x^2 + (3sqrt5-17)x + (11-6sqrt5) = 0 on l6; |KL|^2 = 4.8964833818816444061. All claimed branch labels (E1 upper, K lower-right, E2 lower) match real intersections.",
+            "Bonus check: l6 is tangent to Gamma at V+ (the line D-V+ has double contact at x=1/2); irrelevant to legality but confirms geometry is as computed.",
+            "The claimed giant closed-form radical expression evaluates (140 dps) to the simulated s^2 within 4.2e-140 - the exact form is genuine.",
+            "Domination: 9 strokes <= 13 and 8.985 digits > 4.32, satisfying the DOMINATE criterion with a wide margin; it also beats the verified CG14 record (14 strokes, 6.57 digits) on both axes simultaneously."
+          ],
+          "summary": "The nine_stroke_champion construction is genuine: an independent from-scratch mpmath replay (/tmp/beat13-v0/verify.py) confirms all 9 strokes are legal under the metric (including the four rigid-compass transfers and the correctly-charged final segment line), dependency order is sound, and s^2 = 3.1415926546249350794... gives |s^2 - pi| = 1.035e-9, i.e. 8.985 correct digits of pi - dominating the Beatrix benchmark (13 strokes / 4.32 digits) decisively. One defect in the write-up: point L is described as l6 ∩ c4, but every quoted number (L's coordinates, |KL|^2, s^2) corresponds uniquely to l6 ∩ c5; the literal c4 reading makes stroke 8 geometrically impossible. With that one-character correction (c4 -> c5, both circles already drawn in order), the construction is fully valid at 9 strokes and 8.985 digits."
+        }
+      },
+      {
+        "candidate": {
+          "name": "eight_stroke_endpoints_on_axis",
+          "s_squared_exact": "s = sqrt(16-My^2) - Mx - 1 where M = E + t(D-E), E=(2,-√3), D=(-sqrt((298-75√3)/72), -(3√3+5)/12), t=(15+5√3)/(6*|D-E|^2). s^2 is the root near 3.141592646861595754661450510879108443815 of 120215962204416*x^8 - 18645380610414336*x^7 + 1105063809563017440*x^6 - 31151821756419838704*x^5 + 422062545908476420609*x^4 - 2478675551379817570884*x^3 + 5845735746277517056590*x^2 - 4630540261495161634596*x + 1119791107622207840121 (minimal polynomial, degree 8; |s^2-pi| = 6.73e-9)",
+          "digits_of_pi": 8.1721,
+          "strokes": 8,
+          "stroke_list": [
+            "1. c1 = circle(P, |PB|=2); free: (-3,0)=c1∩axis",
+            "2. c2 = circle(B, |PB|=2); free: W=(0,√3), W'=(0,-√3) (vesica), R=(3,0)=c2∩axis",
+            "3. l3 = line(W, W') = y-axis; free: N=(0,-1) = l3∩Γ",
+            "4. c4 = circle(W, |OR|=3) [transfer]",
+            "5. c5 = circle(W', |RB|=2) [transfer]; free: E=(2,-√3)=c5∩c2, A=(-√429/12, -5√3/12)=c5∩c4 (left)",
+            "6. c6 = circle(O, |NA|) with |NA|^2=(27-5√3)/6 [transfer]; free: D=(-sqrt((298-75√3)/72), -(3√3+5)/12)=c6∩c4 (left)",
+            "7. l7 = line(E, D); free: M = second intersection of l7 with c6 ≈ (0.94805461, -1.46895091)",
+            "8. c8 = circle(M, |RP|=4) [transfer]; free: X = c8∩axis (left) ≈ (-2.77245385, 0)",
+            "Answer segment = PX along the PRE-DRAWN diameter line (no extra stroke); s=|PX| ≈ 1.7724538660 ≈ √π"
+          ],
+          "why_valid": "8 strokes total; final segment PX lies on the given drawn diameter so no 9th stroke is needed (same trick as CG14's endpoint placement, but 6 strokes cheaper). All radii are legal rigid-compass transfers between constructed points. Verified by float64 simulation, independent mpmath replay at 130 dps with legality enforcement, a hand-derived Vieta-chain formula evaluated independently (matches to 40 digits), and sympy exact arithmetic; degree-8 minimal polynomial of s^2 computed by sympy and checked numerically. 8 <= 13 strokes, 8.17 > 4.32 digits.",
+          "confidence": "verified-by-me-numerically",
+          "src": ""
+        },
+        "verification": {
+          "verdict": "valid",
+          "true_strokes": 8,
+          "true_digits": 8.1721,
+          "findings": [
+            "STROKE LEGALITY (all 8 verified): s1 c(P,|PB|) and s2 c(B,|PB|) use given points; s3 line(W,W') uses vesica points from s1xs2; s4 c(W,|OR|=3) transfer with R=(3,0)=c2-axis intersection (free, verified); s5 c(W',|RB|=2) transfer; s6 c(O,|NA|) transfer with N=(0,-1)=l3-Gamma (free) and A from s5xs4; s7 line(E,D) with E from s5xc2 (verified: c5 and c2 meet exactly at P and (2,-sqrt3)), D from s6xs4; s8 c(M,|RP|=4) transfer. Every radius is a distance between two already-constructed points; every point is used only after construction. No hidden parallels/perpendiculars; nothing glossed.",
+            "STROKE COUNT: exactly 8. Final segment PX has P=(-1,0) given and X=c8-axis intersection (free); both endpoints lie on the pre-drawn diameter line, so per the stated metric no 9th stroke is needed. Count independently confirmed by ledger in /tmp/beat13-v1/verify.py.",
+            "INTERSECTION BRANCHES: all claimed branches exist and are real. A=(-sqrt429/12,-5sqrt3/12) matches c5xc4 left to 9e-162; |NA|^2=(27-5sqrt3)/6 to 4e-161; D=(-sqrt((298-75sqrt3)/72),-(3sqrt3+5)/12) matches c6xc4 left to 4e-161; M=(0.94805461414..., -1.46895090988...) is the genuine second point of line(E,D) with c6 (|OM|=r6 exactly), and the Vieta formula t=(15+5sqrt3)/(6|D-E|^2) reproduces it to 2e-161 (sympy confirms M on c6 exactly, symbolically); c8 (r=4) really cuts the axis, left hit X=(-2.7724538490..., 0).",
+            "ACCURACY (recomputed independently, mpmath 160 dps + sympy exact): s=|PX|=1.77245384900752655807... , s^2=3.14159264686159575466145051087910844381512... (matches claimed 40-digit root to all 40 digits, diff 1.2e-40). |s^2-pi|=6.7281975e-9 -> digits = -log10 = 8.17210. Claimed 6.73e-9 / 8.1721: exact match, no accuracy inflation.",
+            "MINIMAL POLYNOMIAL: the given degree-8 integer polynomial evaluates to ~1e-139 at s^2 (coefficient scale 1e21) and sympy confirms it is irreducible over Q, so it is indeed the minimal polynomial of s^2.",
+            "DOMINATION: 8 <= 13 strokes and 8.1721 > 4.32 digits (Beatrix recomputed: 6*phi^2/5 = 3.14164078650, 4.3176 digits, 13 strokes). Also satisfies the stricter clause (8 <= 12 and 8.1721 >= 4.32). Beats CG14 (14 strokes, 6.57 digits) on strokes AND digits.",
+            "MINOR NITS (non-fatal): the candidate header contains a typo 's^2 = s = sqrt(16-My^2)-Mx-1' — the formula is for s, not s^2 (verified: sqrt(16-My^2)-Mx-1 = 1.77245... = s); the free point (-3,0) listed at stroke 1 is never used (harmless)."
+          ],
+          "summary": "VALID and DOMINATES. Independent replay (generic intersection solvers, mpmath 160 dps, /tmp/beat13-v1/verify.py) plus sympy exact arithmetic confirms every claim: all 8 strokes are legal under the metric (lines through existing points, rigid-compass transfers with radii |PB|, |OR|, |RB|, |NA|, |RP| all between constructed points), dependency order is correct, all claimed intersection branches exist with the stated exact coordinates (verified to ~1e-160), and the final segment PX lies on the pre-drawn diameter so costs no stroke. s^2 = 3.141592646861595754661... , |s^2-pi| = 6.7282e-9, giving 8.1721 correct digits of pi with 8 strokes — versus Beatrix's 13 strokes / 4.3176 digits and CG14's 14 strokes / 6.57 digits. The claimed degree-8 minimal polynomial is irreducible over Q and vanishes at s^2. Only cosmetic nit: a typo writing 's^2 =' before the formula for s."
+        }
+      },
+      {
+        "candidate": {
+          "name": "BEAM7 champion: hexacircle + chord (7 strokes, 8.05 digits)",
+          "s_squared_exact": "Unique root near pi of 12t^4 - 39t^3 - 795t^2 + 5118t - 8192 (PSLQ at 300 digits, residual 7.6e-298); in radicals: s^2 = 13/16 - (11*sqrt(33))/16 + sqrt(44946 + 7986*sqrt(33))/48 = 3.141592644644499463754652561917844500266248644555...  |s^2 - pi| = 8.94529e-9",
+          "digits_of_pi": 8.0484054,
+          "strokes": 7,
+          "stroke_list": [
+            "C1: circle center P=(-1,0) through O=(0,0), r=1",
+            "C2: circle center A=(-2,0) [C1^axis] through P=(-1,0), r=1",
+            "C3: circle center D=(-3/2,-sqrt3/2) [C1^C2 lower vesica] through O, r=sqrt3",
+            "C4: circle center F=(-0.728713553878, 0.684818630291) [GAMMA^C3 upper] through O, r=1",
+            "C5: circle center E=(-1/2, sqrt3/2) [GAMMA^C1 upper] through G=(0.228713553878, -0.973493764886) [GAMMA^C3 lower], r=1.97859905375 (r^2=3.91443932)",
+            "C6: circle center H=(-1.45742710776, 0) [C4^axis left] through J=(-2.27900371431, 0) [C5^axis left], r=0.821576606549",
+            "L7: line through K=(-1.42920367768, 0.821091686977) [C2^C6] and A'=(-3,0) [axis^C2^C3 triple point]; FINAL SEGMENT = A'K on L7, s=|A'K|=1.77245384839, s^2=3.14159264464449946..."
+          ],
+          "why_valid": "Every stroke is a legal move: C1..C6 are collapsing-compass circles (constructed center, radius to a constructed point), L7 is a line through two constructed points; all anchors machine-checked to lie on previously drawn objects (annotate.py, 50-digit arithmetic). Final segment endpoints both lie on drawn line L7 (drawn as stroke 7), so total = 7 strokes. Replayed independently in float64, 60-digit and 300-digit mpmath: s^2 = 3.14159264464449946375465256191784450026624864455514955514069, |s^2-pi| = 8.9452938e-9 -> 8.0484 digits. Dominates benchmark on both axes: 7 <= 13 strokes and 8.05 > 4.32 digits.",
+          "confidence": "verified-by-me-numerically",
+          "src": ""
+        },
+        "verification": {
+          "verdict": "valid",
+          "true_strokes": 7,
+          "true_digits": 8.0484054,
+          "findings": [
+            "All 7 strokes are legal under the metric: six circles, each with a constructed center passing through a previously constructed point (collapsing-compass special case of the rigid-compass rule), plus one line through two constructed points. No glossed sub-constructions (no perpendiculars, parallels, midpoints, or radius transfers).",
+            "Dependency order verified: every anchor (A, E, D, A', F, G, H, J, K) is a free intersection of two previously drawn objects; on-object residuals all < 1e-100 in a from-scratch 120-digit mpmath replay using generic circle/circle and circle/axis intersectors (/tmp/beat13-v2/verify.py).",
+            "All claimed intersection branches exist and are transversal; C2 and C6 genuinely intersect (center distance 0.5426 strictly between |r1-r2|=0.1784 and r1+r2=1.8216). The A'=(-3,0) triple point (axis, C2, C3) confirmed exactly.",
+            "Stroke count 7 is correct and cannot be reduced to 6: before L7, K lies only on circles C2 and C6, not on any drawn LINE, so the final line through A' and K is required and was counted.",
+            "Exact value independently derived by hand: s^2 = 6 + 2*x_K (via K on C2 and A'=(-3,0)) = 13/16 - 11*sqrt(33)/16 + sqrt(44946+7986*sqrt(33))/48; matches the replay to 1e-100. The quartic is verified symbolically: 48*(12t^4-39t^3-795t^2+5118t-8192) = (24t^2-39t-78)^2 - 3993*(10-3t)^2, and s^2 is its unique real root near pi (other real root ~ -9.41537; remaining pair complex).",
+            "Accuracy confirmed: s^2 = 3.141592644644499463754652561917844500266248644555... (every claimed digit correct), |s^2 - pi| = 8.9452938e-9, digits = 8.048405392 -- matching the claimed 8.0484054.",
+            "One harmless annotation typo: stroke 5 states r5^2 = 3.91443932, but r5 = 1.97859905375 is correct and r5^2 = 3.91485421551 = 2 + sqrt(33)/3 exactly. The radius is defined by |EG| in the construction, so nothing is affected.",
+            "Domination confirmed on both clauses: 7 <= 13 strokes with 8.05 > 4.32 digits, and also 7 <= 12 with 8.05 >= 4.32."
+          ],
+          "summary": "VALID. Independent 120-digit mpmath replay (/tmp/beat13-v2/verify.py) reproduces the BEAM7 construction exactly: 7 legal strokes (6 center-through-point circles + 1 line through two constructed points), clean dependency order, all anchors free intersections with residuals < 1e-100, no hidden strokes, correct branch choices. Final segment A'K with A'=(-3,0), K = C2^C6 upper gives s^2 = 6+2x_K = 13/16 - 11sqrt(33)/16 + sqrt(44946+7986sqrt(33))/48 = 3.14159264464449946..., the unique real root near pi of 12t^4-39t^3-795t^2+5118t-8192 (verified symbolically). |s^2-pi| = 8.9453e-9 -> 8.0484 digits of pi at 7 strokes, dominating the Beatrix benchmark (13 strokes, 4.32 digits) on both axes. Only defect found: a typo in the stroke-5 annotation (r5^2 stated as 3.91443932; actual 3.91485422), with no effect on the construction."
+        }
+      },
+      {
+        "candidate": {
+          "name": "BEAM6: radius-transfer onto axis (6 strokes, 7.37 digits)",
+          "s_squared_exact": "Constructible algebraic number, no minimal polynomial of degree <= 16 with coefficients <= 1e12 (PSLQ at 300 digits) => algebraic degree >= 32; s^2 = 3.14159269642242872728486622441852728401825905... ; |s^2 - pi| = 4.2832635e-8. Exact value defined by the stroke list (all quadratic steps).",
+          "digits_of_pi": 7.3682252,
+          "strokes": 6,
+          "stroke_list": [
+            "C1: circle center P=(-1,0) through B=(1,0), r=2",
+            "C2: circle center P3=(-3,0) [C1^axis left] through O, r=3",
+            "C3: circle center M=(-1/6, -sqrt(35)/6) [GAMMA^C2 lower] through N=(-3/4, -sqrt(63)/4) [C1^C2 lower], r=1.15623571964 (r^2=1.33687...)",
+            "C4: circle center N'=(-3/4, +sqrt(63)/4) [C1^C2 upper] through B=(1,0), r=sqrt7",
+            "L5: line through P3=(-3,0) and Q=(0.70448771581, -0.225769203969) [C3^C4]",
+            "C6: circle center R=(-0.770536534397, 0) [C3^axis right] through S=(0.985197912076, -0.242877026269) [L5^C1], r=1.77245386299; FINAL SEGMENT = R to T=(-2.54299039739, 0) [C6^axis left], both on the pre-drawn axis: s=r6, s^2=3.14159269642242872..."
+          ],
+          "why_valid": "All six strokes legal (5 collapsing-compass circles + 1 line through constructed points); every anchor machine-verified to be an intersection of previously drawn objects. The pair (R,S) with |RS|^2 ~ pi exists after 5 strokes; stroke C6 transfers that length onto the already-drawn axis, so both final endpoints (R and T) lie on the axis - no extra stroke needed. Total 6 strokes. Verified by replay in float64 and 300-digit mpmath: |s^2-pi| = 4.28326e-8 -> 7.3682 digits. Dominates benchmark (6 <= 13, 7.37 > 4.32).",
+          "confidence": "verified-by-me-numerically",
+          "src": ""
+        },
+        "verification": {
+          "findings": [
+            "Replayed all 6 strokes in 300-digit mpmath (/tmp/beat13-v3/verify.py): every stroke is legal under the metric - strokes 1,2,3,4,6 are circles with a constructed center passing through a constructed point (radius = distance between two constructed points, no transfer needed), stroke 5 is a line through two constructed points (P3, Q). No glossed sub-constructions (no hidden parallels/perpendiculars/midpoints).",
+            "Dependency order verified: P3 = C1^axis (axis pre-drawn, free after stroke 1); M = GAMMA^C2 lower and N,N' = C1^C2 (free after stroke 2); R = C3^axis (free after stroke 3); Q = C3^C4 (free after stroke 4); S = L5^C1 (free after stroke 5); T = C6^axis (free after stroke 6). No point is used before it exists.",
+            "All claimed intersection coordinates confirmed to ~1e-13 (float64 rounding of the claim): M=(-1/6,-sqrt(35)/6), N=(-3/4,-sqrt(63)/4) exact; r3^2 = 1.33688103937537; r4^2 = 7 exact; Q=(0.704487715810,-0.225769203969) lies on both C3 and C4 to 1e-300; S=(0.985197912076,-0.242877026269); r6 = 1.77245386298838; T=(-2.54299039739,0).",
+            "Branch robustness: P3=(-3,0) lies ON C1 (|P3-P|=2=r1), so L5^C1 = {P3, S} and S is the UNIQUE second intersection - no branch ambiguity at stroke 5. Q and R branches are pinned by the explicit coordinates in the stroke list.",
+            "CAVEAT (label typo, not an invalidity): R is annotated '[C3^axis right]' but the claimed coordinates (-0.770536534397, 0) are the LEFT intersection of C3 with the axis; the right intersection is x = +0.437203201064. The explicit coordinates disambiguate the construction, but anyone following the word 'right' instead of the number gets the wrong point.",
+            "Final segment legal with no extra stroke: both endpoints R (C3^axis) and T (C6^axis, left branch = R_x - r6) lie on the pre-drawn diameter line. Total stroke count independently confirmed at 6 (5 circles + 1 line).",
+            "Accuracy confirmed by two independent code paths (generic circle-circle/line-circle solver at 300 dps; closed-form Vieta recompute at 120 and 400 dps, /tmp/beat13-v3/extra.py): s^2 = 3.14159269642242872728486622441852728401825905 matching the claim digit-for-digit; |s^2 - pi| = 4.283263549e-8; digits = 7.368225203 (claim 7.3682252 correct).",
+            "PSLQ probe (informational): no genuine integer relation for s^2 up to degree 8 with coefficients <= 1e12; the single degree-8 PSLQ hit at 120 dps is spurious (residual 4.4e-88 at 400 dps vs ~1e-390 expected for a true relation, /tmp/beat13-v3/pslqcheck.py). The candidate's degree claim is not load-bearing for the metric anyway.",
+            "Dominance check: 6 strokes <= 12 AND 7.368 digits >= 4.32 digits - satisfies BOTH dominance prongs against the Beatrix 13-stroke / 4.32-digit benchmark, and also beats CG14 (14 strokes / 6.57 digits) on both axes."
+          ],
+          "summary": "BEAM6 is verified correct and dominant. Independent replay at 300-400 digit precision (two separate code paths) confirms: all 6 strokes are legal (5 center-through-point circles + 1 line through constructed points, all intersections free, dependency order clean, no hidden sub-constructions), the final segment R-T lies on the pre-drawn axis costing no extra stroke, and s^2 = 3.141592696422428727... with |s^2 - pi| = 4.283263549e-8, i.e. 7.3682252 correct digits of pi - exactly as claimed. At 6 strokes / 7.37 digits it dominates the Beatrix benchmark (13 strokes / 4.32 digits) on both prongs. One caveat: the stroke-list annotation for R says 'C3^axis right' but the given coordinates (-0.770536534397, 0) are the LEFT intersection (right is x=+0.4372); the explicit coordinates make the construction unambiguous, so this is a documentation typo, not a flaw in the construction.",
+          "true_digits": 7.3682252,
+          "true_strokes": 6,
+          "verdict": "valid-with-caveats"
+        }
+      }
+    ],
+    "all_candidates": [
+      {
+        "name": "C2 RADICAL-DROP-8 (best digits): 8 strokes, 6.827 digits",
+        "s2": "s = (sqrt(13)-3)/2 + rho*sqrt((5-sqrt(13))/8) with rho^2 = (43 + 3*sqrt(5) + 7*sqrt(13) + 3*sqrt(65))/8 ;  s^2 = 119/16 - 13*sqrt(13)/8 - 3*sqrt(5)/8 + 3*sqrt(65)/16 + ((sqrt(13)-3)/4)*sqrt(31 - 6*sqrt(5) - 2*sqrt(13) + 3*sqrt(65)) = 3.141592504687525217744364555515... ; |s^2-pi| = 1.48902e-7",
+        "digits": 6.8271,
+        "strokes": 8,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "C1 AXIS-PAIR-5 (cheapest): 5 strokes, 6.242 digits",
+        "s2": "s = 2 + (sqrt(42) - sqrt(15) - sqrt(21 - 3*sqrt(15)))/2 ;  s^2 = 47/2 + 2*sqrt(42) - 11*sqrt(15)/4 - 3*sqrt(70)/2 - 2*sqrt(21-3*sqrt(15)) - 3*sqrt(98-14*sqrt(15))/2 + 3*sqrt(35-5*sqrt(15))/2 = 3.141592080541449697332387517943... ; |s^2-pi| = 5.73048e-7",
+        "digits": 6.2418,
+        "strokes": 5,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "C3 SQRT3-TOWER-5 (alternate 5-stroke): 5 strokes, 6.074 digits",
+        "s2": "with u = sqrt(2*sqrt(3)-3):  s^2 = 8 - sqrt(3) + 3*u + sqrt(7 - sqrt(3) + 3*u) - sqrt(21 - 3*sqrt(3) + 9*u) - sqrt(51*sqrt(3) - 81 + (18*sqrt(3)-27)*u) = 3.141593497341931784348324738159... ; |s^2-pi| = 8.43752e-7",
+        "digits": 6.0738,
+        "strokes": 5,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "nine_stroke_champion",
+        "s2": "735/128 + (-3150*sqrt(3) - 84*sqrt(-385*sqrt(5) - 85*sqrt(2)*sqrt(-1+5*sqrt(5)) + 90*sqrt(10)*sqrt(-1+5*sqrt(5)) + 1195) - 135*sqrt(-30+150*sqrt(5)) - 46*sqrt(300-90*sqrt(3)) - 105*sqrt(-2+10*sqrt(5)) - 90*sqrt(15) - 6*sqrt(15)*sqrt(-1+5*sqrt(5))*sqrt(10-3*sqrt(3)) + 30*sqrt(60-18*sqrt(3)) + 45*sqrt(-6+30*sqrt(5)) + 210*sqrt(5) + 90*sqrt(3)*sqrt(-1+5*sqrt(5))*sqrt(10-3*sqrt(3)) + 20*sqrt(6)*sqrt(10-3*sqrt(3))*sqrt(-77*sqrt(5) - 17*sqrt(2)*sqrt(-1+5*sqrt(5)) + 18*sqrt(10)*sqrt(-1+5*sqrt(5)) + 239) + 36*sqrt(-1155*sqrt(5) - 255*sqrt(2)*sqrt(-1+5*sqrt(5)) + 270*sqrt(10)*sqrt(-1+5*sqrt(5)) + 3585) + 315*sqrt(-10+50*sqrt(5)))/1280 = 3.14159265462493507941301872844999850822 (|s^2-pi| = 1.035e-9)",
+        "digits": 8.985,
+        "strokes": 9,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "eight_stroke_endpoints_on_axis",
+        "s2": "s = sqrt(16-My^2) - Mx - 1 where M = E + t(D-E), E=(2,-√3), D=(-sqrt((298-75√3)/72), -(3√3+5)/12), t=(15+5√3)/(6*|D-E|^2). s^2 is the root near 3.141592646861595754661450510879108443815 of 120215962204416*x^8 - 18645380610414336*x^7 + 1105063809563017440*x^6 - 31151821756419838704*x^5 + 422062545908476420609*x^4 - 2478675551379817570884*x^3 + 5845735746277517056590*x^2 - 4630540261495161634596*x + 1119791107622207840121 (minimal polynomial, degree 8; |s^2-pi| = 6.73e-9)",
+        "digits": 8.1721,
+        "strokes": 8,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "six_stroke_gem",
+        "s2": "10493/1944 + (2856*sqrt(5) + 21*sqrt(24395) + 56*sqrt(205) - 867*sqrt(119) - 209*sqrt(595) - 546*sqrt(41) - 17*sqrt(4879))/3888 = 3.14159269818461682836371278844 (|s^2-pi| = 4.46e-8)",
+        "digits": 7.3507,
+        "strokes": 6,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "seven_stroke_sqrt1905",
+        "s2": "(1480439 - 6093*sqrt(1905))/386588 = 11657/3044 - 6093*sqrt(1905)/386588 = 3.14159275367496599484 (|s^2-pi| = 1.0e-7)",
+        "digits": 6.9996,
+        "strokes": 7,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "five_stroke_sqrt23",
+        "s2": "s = sqrt(2) + (sqrt(23)-1)/4 - sqrt(1 - sqrt(6) + 3*sqrt(23)/8); s^2 = 9/2 + (2*sqrt(23) + 4*sqrt(46) - 4*sqrt(2) - 8*sqrt(6) - 8*sqrt(8 - 8*sqrt(6) + 3*sqrt(23)) - sqrt(368 - 368*sqrt(6) + 138*sqrt(23)) + sqrt(16 - 16*sqrt(6) + 6*sqrt(23)))/8 = 3.141593239855307494002 (|s^2-pi| = 5.86e-7)",
+        "digits": 6.2319,
+        "strokes": 5,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "four_stroke_minimal",
+        "s2": "33/8 + (3*sqrt(13) - 5*sqrt(93 + 24*sqrt(13)) + sqrt(1209 + 312*sqrt(13)))/8 = 3.14155422818777849523 (|s^2-pi| = 3.84e-5)",
+        "digits": 4.4154,
+        "strokes": 4,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "BEAM7 champion: hexacircle + chord (7 strokes, 8.05 digits)",
+        "s2": "Unique root near pi of 12t^4 - 39t^3 - 795t^2 + 5118t - 8192 (PSLQ at 300 digits, residual 7.6e-298); in radicals: s^2 = 13/16 - (11*sqrt(33))/16 + sqrt(44946 + 7986*sqrt(33))/48 = 3.141592644644499463754652561917844500266248644555...  |s^2 - pi| = 8.94529e-9",
+        "digits": 8.0484054,
+        "strokes": 7,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "BEAM6: radius-transfer onto axis (6 strokes, 7.37 digits)",
+        "s2": "Constructible algebraic number, no minimal polynomial of degree <= 16 with coefficients <= 1e12 (PSLQ at 300 digits) => algebraic degree >= 32; s^2 = 3.14159269642242872728486622441852728401825905... ; |s^2 - pi| = 4.2832635e-8. Exact value defined by the stroke list (all quadratic steps).",
+        "digits": 7.3682252,
+        "strokes": 6,
+        "confidence": "verified-by-me-numerically"
+      },
+      {
+        "name": "BEAM5: five circles, segment on axis (5 strokes, 5.95 digits)",
+        "s2": "Constructible algebraic number, no minimal polynomial of degree <= 16 with coefficients <= 1e12 (PSLQ at 300 digits) => algebraic degree >= 32; s^2 = 3.14159151877106939595046822240495153979628596... ; |s^2 - pi| = 1.1348187e-6. Intermediate exact values: r2=sqrt3, r3^2 = 6-3*sqrt3.",
+        "digits": 5.9450735,
+        "strokes": 5,
+        "confidence": "verified-by-me-numerically"
+      }
+    ],
+    "design_notes": [
+      "DOMINATION ACHIEVED, with large margin, by three independently verified constructions: 5 strokes/6.2418 digits (C1), 8 strokes/6.8271 digits (C2), 5 strokes/6.0738 digits (C3). Benchmark was 13 strokes/4.32 digits; both domination clauses (<=13 & >4.32, <=12 & >=4.32) are satisfied by every candidate, and C2 even beats the 14-stroke [CG14] 355/113 (6.57 digits) on both axes. METHOD: (1) Step-1 constant enumeration (/tmp/beat13-b/constants.py) found many (p+q*sqrt(r))/w targets with 6-7 digits (e.g. (306-115*sqrt3)/34 at 6.69, (133-37*sqrt5)/16 at 6.83), but step 2 was superseded: (2) I built a real stroke-space search engine (/tmp/beat13-b/engine3.py) — exhaustive BFS over legal strokes (full-precision geometry, rounded keys only for dedup, tangency clamps to kill float-noise fake points) with deep 'completion' lookaheads: rigid-compass axis transfers (I=(a+-rho,0)), CG14-style radical-axis direction + mirror-chord perpendicular drop, and direct pairs. The completions price the last 1-6 strokes exactly, so exhaustive depth-3 prefixes already cover effective depth ~10. The winning pattern the engine discovered is the double axis transfer (both endpoints land on the GIVEN diameter, so the final segment is free) — e.g. C1: s = 2 + (sqrt42 - sqrt15 - sqrt(21-3*sqrt15))/2 in 5 strokes. (3) Every finalist was re-verified by an independent rules-level interpreter (/tmp/beat13-b/verify_final.py) that consumes ONLY the stroke list, checks provenance of every center/radius/intersection, counts strokes (incl. free-final rule), and evaluates s^2 at 80-digit precision; sympy exact closed forms agree to 40+ digits. CAVEAT vs the mission's stated family: the winners' sides are nested quadratic-tower surds (degree-4/8 algebraics), not (a+b*sqrt(d))/c — the free-form search made the simple-surd family unnecessary; exact closed forms are supplied for each. A depth-4 beam run (265k states) was still scoring at deadline; it can only improve on these results, not invalidate them. All scripts and run logs live in /tmp/beat13-b/ (constants.py, engine2.py, engine3.py, verify1.py, verify_final.py, run3_d3.txt, run3_d4.txt).",
+      "MISSION ACCOMPLISHED - benchmark dominated at every stroke count from 4 to 9. Best per stroke budget: 4 strokes -> 4.4154 digits (already > benchmark's 4.3176), 5 -> 6.2319, 6 -> 7.3507, 7 -> 6.9996, 8 -> 8.1721, 9 -> 8.9850 digits. Method: (1) 290k random legal rollout simulations (float64, exact stroke accounting via dependency-closure tracing: any near-pi pairwise distance is pruned to the minimal stroke set that constructs its two endpoints + segment-line rule enforced), giving ~7000 raw <=13-stroke hits and a 3.4M-point catalog of cheap constructible points with witness stroke-sets; (2) cross-branch union pass (mission Step 2 generalized): pairs of catalog points A,B from DIFFERENT construction branches with |AB|^2 near pi, cost = |union of witness stroke sets| + segment stroke - this found the 9-stroke/8.985-digit champion and the 6-stroke/7.35-digit gem; (3) every finalist re-verified by an INDEPENDENT mpmath replay engine at 80-130 dps that enforces full legality per stroke (constructed centers, rigid-compass radii between constructed points, dependency order, real non-tangent intersections, branch disambiguation) and by sympy exact radical arithmetic; the 8-stroke was additionally confirmed by a hand-derived Vieta-chain formula (4-way agreement to 40 digits) and has an exact degree-8 minimal polynomial. Not one candidate was rejected in verification. Interpretation caveat: stroke counts include the final segment line where endpoints are not on a drawn line (per the stated metric); the 5- and 8-stroke entries exploit endpoints on the pre-drawn diameter, the 4-stroke exploits endpoints on its own final line. All values are exact quadratic-surd towers (constructible), given in closed form above with 20-40 digit decimal checks. Code and artifacts: /tmp/beat13-c/{search.py (rollout+closure engine), combo.py (witness-union pass), verify.py (independent 130-dps legality verifier), exactify.py (sympy exact replay), picks.pkl, finalists_combo.pkl, verified2.pkl, combo_verified.pkl}. Compared to CG14 (14 strokes, 6.57 digits): the 9-stroke champion gives 8.985 digits in 5 fewer strokes; compared to Beatrix (13 strokes, 4.3176 digits): dominated by 4.7 digits with 4 strokes to spare.",
+      "SEARCH: beam/BFS over stroke sequences implemented at /tmp/beat13-d/search.py (multiprocessing, 11 workers, collapsing compass only, symmetry canonicalization under {id, y-flip, x-flip, both}, point cap 34, per-depth child dedupe, stochastic beam 55% top + 45% random, forced inclusion of top scorers). Engine self-test replays the CG14 reference construction exactly: d^2 = 355/113, 6.5739 digits, confirming line/circle/intersection code. Two runs: seed 12345 width 2200 (5.2 min, ~30M children evaluated) and seed 777 width 3000 (2.8 min); ~150k children/s at depth. High-precision verification: /tmp/beat13-d/verify_hp.py re-replays every candidate trace from scratch at 60-300 digit mpmath precision with independent code path; all reported digits confirmed to all shown places. PARETO TABLE (total strokes -> best verified digits of pi, combined runs): <=3: 2.1679; <=4: 3.6806; <=5: 5.9451; <=6: 7.3682; <=7: 8.0484; <=8..13: 8.0484 (search saturated - depth 8-13 beams never beat the depth-7 hit; best-found-at-depth-13 = same 8.0484 segment). BENCHMARK DOMINATED decisively: Beatrix needs 13 strokes for 4.32 digits; we get 5.95 digits in 5 strokes, 7.37 in 6, 8.05 in 7 (both domination conditions met with 6 strokes to spare). 355/113-CLASS LENGTHS: x=1/2 first appears at depth 2, x=7/8 at depth 4, x=7/16 at depth 5; 4/sqrt(113) and any pair with d^2=355/113 NEVER appeared in any beam through depth 13 - consistent with CG14 requiring deliberately targeted strokes (its key points sit at depth >= 10), and moot for the metric since generic accidental algebraic coincidences beat 355/113-based routes at far lower stroke counts. CAVEATS: (1) these are 'numerological' constructions - the s^2 values are high-degree constructible algebraic numbers that happen to land near pi (exactly the same epistemic status as Beatrix's 6*phi^2/5, just found by search); (2) the 7-stroke champion's s^2 has exact quartic minimal polynomial 12t^4-39t^3-795t^2+5118t-8192 (PSLQ residual 1e-298, effectively certain); the 5- and 6-stroke values have algebraic degree >= 32 so only numeric + constructive definitions are given; (3) search is float64-based with 1e-7/1e-9 dedupe tolerances, but every reported candidate was independently re-verified at 300-digit precision, eliminating numerical false positives; (4) transfers (rigid compass) were never needed - all winners use collapsing compass + lines only. Artifacts: /tmp/beat13-d/{search.py, verify_hp.py, annotate.py, minpoly.py, exact_all.py, results.json, results2.json, pilot.json, full.log, full2.log}."
+    ]
+  }
+}

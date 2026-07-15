@@ -1,0 +1,37 @@
+depth  1: parents=1 children=4 uniq=2 conn=-1.0000 any=0.8490 rate=2148/s t=0.0s
+depth  2: parents=2 children=39 uniq=23 conn=0.8490 any=0.8490 rate=10107/s t=0.0s
+depth  3: parents=23 children=1086 uniq=458 conn=2.1679 any=2.6109 rate=19048/s t=0.0s
+depth  4: parents=458 children=53091 uniq=24462 conn=3.6806 any=5.3304 rate=42402/s t=0.8s
+depth  5: parents=2200 children=868517 uniq=284445 conn=5.9451 any=6.7996 rate=44905/s t=18.3s
+depth  6: parents=2200 children=2025947 uniq=1232720 conn=6.7996 any=8.0484 rate=47031/s t=41.2s
+depth  7: parents=2205 children=3217559 uniq=2999605 conn=8.0484 any=6.9137 rate=102691/s t=20.3s
+depth  8: parents=2207 children=3411265 uniq=2425948 conn=8.0484 any=6.9137 rate=157294/s t=16.1s
+depth  9: parents=2208 children=3444372 uniq=3152357 conn=8.0484 any=-1.0000 rate=155312/s t=22.5s
+depth 10: parents=2208 children=3465342 uniq=3146457 conn=8.0484 any=-1.0000 rate=163378/s t=20.2s
+depth 11: parents=2208 children=3472810 uniq=3140164 conn=8.0484 any=-1.0000 rate=171723/s t=19.3s
+depth 12: parents=2208 children=3475017 uniq=3136490 conn=8.0484 any=-1.0000 rate=161307/s t=23.0s
+depth 13: parents=2208 children=3473759 uniq=3133519 conn=8.0484 any=-1.0000 rate=141441/s t=28.6s
+
+===== PARETO (total strokes -> digits) =====
+ <= 1 strokes : -9.0000 digits  (from depth None, None)
+ <= 2 strokes : 0.8490 digits  (from depth 2, conn)
+ <= 3 strokes : 2.1679 digits  (from depth 3, conn)
+ <= 4 strokes : 3.6806 digits  (from depth 4, conn)
+ <= 5 strokes : 5.9451 digits  (from depth 5, conn)
+ <= 6 strokes : 6.7996 digits  (from depth 6, conn)
+ <= 7 strokes : 8.0484 digits  (from depth 7, conn)
+ <= 8 strokes : 8.0484 digits  (from depth 7, conn)
+ <= 9 strokes : 8.0484 digits  (from depth 7, conn)
+ <=10 strokes : 8.0484 digits  (from depth 7, conn)
+ <=11 strokes : 8.0484 digits  (from depth 7, conn)
+ <=12 strokes : 8.0484 digits  (from depth 7, conn)
+ <=13 strokes : 8.0484 digits  (from depth 7, conn)
+specials first depth: {'x=1/2': 2, 'x=7/8': 4, 'x=7/16': 5}
+top candidates:
+ total=7 kind=any claimed=8.0484 replay=8.0484 d2=3.141592644645 pair=[[-1.4292036776777497, 0.8210916869774008], [-3.0, 0.0]]
+ total=7 kind=conn claimed=8.0484 replay=8.0484 d2=3.141592644645 pair=[[-3.0, 0.0], [-1.4292036776777497, 0.8210916869774008]]
+ total=8 kind=conn claimed=8.0484 replay=8.0484 d2=3.141592644645 pair=[[-3.0, 0.0], [-1.4292036776777497, 0.8210916869774008]]
+ total=9 kind=conn claimed=8.0484 replay=8.0484 d2=3.141592644645 pair=[[-3.0, 0.0], [-1.4292036776777497, 0.8210916869774008]]
+ total=10 kind=conn claimed=8.0484 replay=8.0484 d2=3.141592644645 pair=[[-3.0, 0.0], [-1.4292036776777497, 0.8210916869774008]]
+ total=11 kind=conn claimed=8.0484 replay=8.0484 d2=3.141592644645 pair=[[-3.0, 0.0], [-1.4292036776777497, 0.8210916869774008]]
+elapsed 312.3s

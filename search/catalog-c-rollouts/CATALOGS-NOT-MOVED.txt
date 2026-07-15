@@ -1,0 +1,1 @@
+NOTE: raw per-branch point catalogs cat_a..e.pkl (~3.8 GB, regenerable via search.py) were left in /tmp/beat13-c and not moved.

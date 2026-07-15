@@ -1,0 +1,581 @@
+{
+ "config": {
+  "width": 3000,
+  "minutes": 4.0,
+  "seed": 777,
+  "workers": 11,
+  "point_cap": 34
+ },
+ "specials_first_depth": {
+  "x=1/2": 2,
+  "x=7/8": 4,
+  "x=7/16": 5
+ },
+ "log": [
+  "depth  1: parents=1 children=4 uniq=2 conn=-1.0000 any=0.8490 rate=2075/s t=0.0s",
+  "depth  2: parents=2 children=39 uniq=23 conn=0.8490 any=0.8490 rate=3810/s t=0.0s",
+  "depth  3: parents=23 children=1086 uniq=458 conn=2.1679 any=2.6109 rate=23844/s t=0.0s",
+  "depth  4: parents=458 children=53091 uniq=24463 conn=3.6806 any=5.3304 rate=61891/s t=0.5s",
+  "depth  5: parents=3000 children=1163974 uniq=376105 conn=5.9451 any=7.3682 rate=66713/s t=16.3s",
+  "depth  6: parents=2900 children=2680964 uniq=1657800 conn=7.3682 any=7.3682 rate=67584/s t=39.2s",
+  "depth  7: parents=1703 children=2447513 uniq=2382900 conn=7.3682 any=7.3682 rate=185229/s t=8.1s",
+  "depth  8: parents=3009 children=4234291 uniq=4133804 conn=7.3682 any=-1.0000 rate=266586/s t=12.2s",
+  "depth  9: parents=3008 children=4182578 uniq=4086993 conn=7.3682 any=-1.0000 rate=306893/s t=12.0s",
+  "depth 10: parents=3008 children=4163458 uniq=4069840 conn=7.3682 any=-1.0000 rate=309800/s t=13.3s",
+  "depth 11: parents=3008 children=4153333 uniq=4061627 conn=7.3682 any=-1.0000 rate=308677/s t=13.5s",
+  "depth 12: parents=3008 children=4147415 uniq=4056185 conn=7.3682 any=-1.0000 rate=306980/s t=13.6s",
+  "depth 13: parents=3008 children=4142730 uniq=4051688 conn=7.3682 any=-1.0000 rate=287946/s t=15.4s"
+ ],
+ "pareto_total": [
+  {
+   "total_strokes": 1,
+   "digits": -9,
+   "src_depth": null,
+   "kind": null
+  },
+  {
+   "total_strokes": 2,
+   "digits": 0.8489592790486615,
+   "src_depth": 2,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 3,
+   "digits": 2.1679362146582606,
+   "src_depth": 3,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 4,
+   "digits": 3.680627735434388,
+   "src_depth": 4,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 5,
+   "digits": 5.945073507708591,
+   "src_depth": 5,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 6,
+   "digits": 7.368225214442106,
+   "src_depth": 6,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 7,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 8,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 9,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 10,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 11,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 12,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  },
+  {
+   "total_strokes": 13,
+   "digits": 7.368225218944875,
+   "src_depth": 7,
+   "kind": "conn"
+  }
+ ],
+ "candidates": [
+  {
+   "depth": 6,
+   "kind": "any",
+   "total_strokes": 7,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ],
+    [
+     -0.7705365343974101,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "7: line (-2.54277134,-0.027865702) -- (-0.770536534,0)"
+   ]
+  },
+  {
+   "depth": 7,
+   "kind": "conn",
+   "total_strokes": 7,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "7: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 7,
+   "kind": "any",
+   "total_strokes": 8,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ],
+    [
+     -0.7705365343974101,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: line (-2.54277134,-0.027865702) -- (-0.770536534,0)"
+   ]
+  },
+  {
+   "depth": 8,
+   "kind": "conn",
+   "total_strokes": 8,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 9,
+   "kind": "conn",
+   "total_strokes": 9,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: circle center (-0.054326931,-0.568339839) through (-0.75,-1.98431348)",
+    "9: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 10,
+   "kind": "conn",
+   "total_strokes": 10,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: circle center (-0.166666667,0.986013297) through (-1.77005246,4.42552076)",
+    "9: circle center (0.970284202,-0.241968113) through (-0.770536534,0)",
+    "10: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 11,
+   "kind": "conn",
+   "total_strokes": 11,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: circle center (-0.166666667,0.986013297) through (-1.77005246,4.42552076)",
+    "9: circle center (-1.26063456,-0.611693518) through (-0.770536534,0)",
+    "10: circle center (-1.77005246,4.42552076) through (-0.75,1.98431348)",
+    "11: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 12,
+   "kind": "conn",
+   "total_strokes": 12,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: circle center (-0.166666667,0.986013297) through (-1.77005246,4.42552076)",
+    "9: circle center (0.970284202,-0.241968113) through (-0.770536534,0)",
+    "10: line (1,0) -- (-0.005555928,-0.182495747)",
+    "11: circle center (-1,0) through (-2.54277134,-0.027865702)",
+    "12: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 13,
+   "kind": "conn",
+   "total_strokes": 13,
+   "digits_claimed": 7.368225218944875,
+   "replay_digits": 7.368225218944875,
+   "replay_d2": 3.141592696422427,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     -2.542771337991429,
+     -0.02786570208151913
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (-3.19567307,2.99361187) -- (-5.99444407,0.182495747)",
+    "7: circle center (-0.770536534,0) through (0.985197912,-0.242877026)",
+    "8: line (-6,0) -- (-0.75,-1.98431348)",
+    "9: circle center (-0.75,-1.98431348) through (0.970284202,-0.241968113)",
+    "10: circle center (-0.992487334,-0.122347426) through (-2.9375,0.496078371)",
+    "11: line (-1.77005246,4.42552076) -- (-2.5429904,0)",
+    "12: line (-0.166666667,-0.986013297) -- (-2.5429904,0)",
+    "13: line (-0.770536534,0) -- (-2.54277134,-0.027865702)"
+   ]
+  },
+  {
+   "depth": 6,
+   "kind": "conn",
+   "total_strokes": 6,
+   "digits_claimed": 7.368225214442106,
+   "replay_digits": 7.368225214442106,
+   "replay_d2": 3.1415926964224274,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -2.5429903973857892,
+     0.0
+    ],
+    [
+     -0.7705365343974101,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: circle center (-0.770536534,0) through (0.985197912,-0.242877026)"
+   ]
+  },
+  {
+   "depth": 5,
+   "kind": "any",
+   "total_strokes": 6,
+   "digits_claimed": 7.3682252009337965,
+   "replay_digits": 7.3682252009337965,
+   "replay_d2": 3.1415926964224288,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     0.9851979120758996,
+     -0.24287702626944577
+    ],
+    [
+     -0.7705365343974101,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)",
+    "4: circle center (-0.75,1.98431348) through (1,0)",
+    "5: line (-3,0) -- (0.704487716,-0.225769204)",
+    "6: line (0.985197912,-0.242877026) -- (-0.770536534,0)"
+   ]
+  },
+  {
+   "depth": 5,
+   "kind": "conn",
+   "total_strokes": 5,
+   "digits_claimed": 5.945073507708591,
+   "replay_digits": 5.945073507708591,
+   "replay_d2": 3.1415915187710706,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7724535307790359,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (0,0)",
+    "2: circle center (1,0) through (-0.5,-0.866025404)",
+    "3: circle center (-0.5,-0.866025404) through (-0.732050808,0)",
+    "4: circle center (-1.39502863,-0.918668809) through (-2,0)",
+    "5: circle center (-0.315015291,-1.12726873) through (-0.993104842,-0.117229576)"
+   ]
+  },
+  {
+   "depth": 4,
+   "kind": "any",
+   "total_strokes": 5,
+   "digits_claimed": 5.33042856174922,
+   "replay_digits": 5.33042856174922,
+   "replay_d2": 3.1415973263278727,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.4256855189089543,
+     -0.9048711725937646
+    ],
+    [
+     -0.5,
+     0.8660254037844386
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (0,0)",
+    "2: circle center (1,0) through (-1,0)",
+    "3: line (-0.5,-0.866025404) -- (3,0)",
+    "4: circle center (-0.75,0.968245837) through (-0.769230769,-0.932642743)",
+    "5: line (-0.425685519,-0.904871173) -- (-0.5,0.866025404)"
+   ]
+  },
+  {
+   "depth": 4,
+   "kind": "conn",
+   "total_strokes": 4,
+   "digits_claimed": 3.680627735434388,
+   "replay_digits": 3.680627735434388,
+   "replay_d2": 3.141801281431183,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.22748729724405548,
+     0.0
+    ],
+    [
+     -2.0,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (0,0)",
+    "2: circle center (1,0) through (-1,0)",
+    "3: circle center (-0.75,0.968245837) through (-0.5,0.866025404)",
+    "4: line (-0.5,0.866025404) -- (-0.603583699,1.19520681)"
+   ]
+  },
+  {
+   "depth": 3,
+   "kind": "any",
+   "total_strokes": 4,
+   "digits_claimed": 2.610877178268833,
+   "replay_digits": 2.610877178268833,
+   "replay_d2": 3.144042409543007,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.20520287467186837,
+     0.8824416575127643
+    ],
+    [
+     -0.5,
+     -0.8660254037844386
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (0,0)",
+    "2: circle center (-2,0) through (0,0)",
+    "3: circle center (-0.25,-0.968245837) through (-0.5,0.866025404)",
+    "4: line (-0.205202875,0.882441658) -- (-0.5,-0.866025404)"
+   ]
+  },
+  {
+   "depth": 3,
+   "kind": "conn",
+   "total_strokes": 3,
+   "digits_claimed": 2.1679362146582606,
+   "replay_digits": 2.1679362146582606,
+   "replay_d2": 3.134799619635992,
+   "replay_connected": true,
+   "replay_error": null,
+   "pair": [
+    [
+     -0.7705365343974101,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ],
+   "trace": [
+    "1: circle center (-1,0) through (1,0)",
+    "2: circle center (-3,0) through (0,0)",
+    "3: circle center (-0.166666667,-0.986013297) through (-0.75,-1.98431348)"
+   ]
+  }
+ ]
+}

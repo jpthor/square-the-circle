@@ -1,0 +1,26 @@
+2000 rollouts 3s hits=83 cat=40368
+4000 rollouts 5s hits=156 cat=75900
+6000 rollouts 8s hits=228 cat=110783
+8000 rollouts 11s hits=308 cat=143819
+10000 rollouts 14s hits=385 cat=175716
+12000 rollouts 16s hits=459 cat=206456
+14000 rollouts 19s hits=527 cat=237622
+16000 rollouts 22s hits=612 cat=267746
+18000 rollouts 25s hits=684 cat=297672
+20000 rollouts 27s hits=763 cat=327401
+22000 rollouts 30s hits=849 cat=357021
+24000 rollouts 33s hits=936 cat=386174
+26000 rollouts 35s hits=1020 cat=415185
+28000 rollouts 38s hits=1094 cat=444102
+30000 rollouts 40s hits=1178 cat=472824
+32000 rollouts 43s hits=1285 cat=500506
+34000 rollouts 46s hits=1360 cat=528643
+36000 rollouts 49s hits=1445 cat=557473
+38000 rollouts 52s hits=1519 cat=585078
+40000 rollouts 58s hits=1604 cat=612610
+42000 rollouts 67s hits=1690 cat=640534
+44000 rollouts 69s hits=1762 cat=667814
+46000 rollouts 90s hits=1840 cat=695762
+48000 rollouts 93s hits=1913 cat=723150
+50000 rollouts 114s hits=1997 cat=750124
+done 1997 hits; 750124 catalog pts; 148s

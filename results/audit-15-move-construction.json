@@ -1,0 +1,170 @@
+{
+  "summary": "Adversarially audit the 15-move squaring-the-circle construction for rule validity, geometric correctness, fair move counting, and prior art",
+  "agentCount": 6,
+  "logs": [],
+  "result": {
+    "legality": {
+      "findings": [
+        {
+          "claim": "The 15 construction moves were delivered for audit",
+          "status": "refuted",
+          "detail": "Every placeholder in the task prompt rendered as the literal string 'undefined' — the move list, and the block quote of Ramanujan's 1913 givens, are both absent. This is a template-interpolation failure in the orchestration script (variables passed as undefined). No move-by-move classification (straightedge / collapsing-legal / rigid transfer) is possible without the moves."
+        },
+        {
+          "claim": "The construction under audit exists somewhere in the working directory",
+          "status": "refuted",
+          "detail": "Searched /Users/bot/dev/cadex for 'ramanujan', 'straightedge', 'collapsing', 'compass' across md/txt/json and checked recently modified files in the repo root and /tmp. All hits are YF41 flight-pipeline artifacts (avionics 'compass'), unrelated to geometry. The orchestrator did not drop the construction to disk either."
+        },
+        {
+          "claim": "Task 4 (givens match Ramanujan 1913) is checkable",
+          "status": "refuted",
+          "detail": "Both sides of the comparison are missing: the audited construction's givens AND the reference quote both rendered as 'undefined'. For the record, Ramanujan's actual 1913 givens ('Squaring the circle', J. Indian Math. Soc. V, 132) are: a circle PQR with centre O and diameter PR — i.e. circle + centre + diameter line with both endpoints on the circle. If the audited construction assumes exactly {circle, centre O, diameter PR with R on circle}, that matches; but I cannot confirm what it actually assumes."
+        },
+        {
+          "claim": "CONDITIONAL — if the target is the canonical Ramanujan 1913 construction, it contains exactly four rigid-compass transfer moves",
+          "status": "uncertain",
+          "detail": "Uncertain only because the actual move list is unseen. In the canonical text the transfers are: (1) 'place the chord RS = TQ' (radius TQ copied to centre R — neither endpoint of TQ is R); (2) 'place a chord PK = PM'; (3) 'draw the tangent PL = MN' (length MN transferred along the tangent at P — also note the tangent-at-P itself requires an erected perpendicular to PR at P, which is straightedge+compass legal); (4) 'cut off RC = RH' on RL. All other moves are straightedge joins (PS, RL, RK, KL), collapsing-legal circles (bisection of PO at H, trisection of OR at T, perpendicular TQ at T, parallels OM, TN, CD via standard I.31 parallel construction), and intersections."
+        },
+        {
+          "claim": "CONDITIONAL — Euclid I.2 (compass equivalence) legitimizes every rigid transfer for constructibility",
+          "status": "confirmed",
+          "detail": "This part is theorem, independent of the unseen move list: Euclid I.2/I.3 prove the rigid (non-collapsing) compass adds no constructible points, so ANY finite set of radius-transfer moves is legitimate for constructibility questions. Cost of exact expansion per transfer: I.2 = join AB (1 line) + equilateral triangle I.1 (2 circles, 2 lines) + extend DA, DB (2 lines) + circle(B, BC) (1 collapsing-legal circle) + circle(D, DG) (1 collapsing-legal circle) ≈ 9 collapsing-legal moves, then I.3 to cut the copied length onto the desired ray adds 1 more circle ≈ 10 moves per transfer. Four transfers ≈ 36–44 extra elementary moves (some lines/points are reusable). The construction remains finite, hence legal under strict collapsing rules after expansion."
+        },
+        {
+          "claim": "CONDITIONAL — all intersections in the canonical construction exist and dependency order is sound",
+          "status": "uncertain",
+          "detail": "For the canonical construction (unit radius r): T interior to circle (OT = 2r/3 < r) so perpendicular at T meets the circle — Q exists; RS = TQ = (√5/3)r < 2r so the chord from R exists; angle PSR = 90° (Thales) gives PS = (√31/3)r, and PM = PS·PO/PR = (√31/6)r < 2r so chord PK exists; PL = MN > 0 exists on the tangent; RH = (3/2)r < RL so C exists on RL; CD ∥ KL meets RK at D since C ≠ R. Dependency order in the published text is strictly forward (no point used before construction). Marked uncertain solely because the audited 15-move list may differ from the canonical text — a reordering or a different intersection choice could break this, and I cannot verify what I was not given."
+        },
+        {
+          "claim": "The construction can be certified valid under modern or strict-Euclid rules",
+          "status": "refuted",
+          "detail": "Fail-closed: no certification is possible for an unseen construction. The task explicitly says 'try hard to find a rules violation'; the only finding I can assert with certainty is that the audit input itself violates the audit's preconditions. The parent workflow should re-run this subagent with the move list and the Ramanujan quote actually interpolated into the prompt (they were passed as JavaScript undefined — likely a wrong variable name or an unawaited promise in the orchestrator)."
+        }
+      ],
+      "verdict": "invalid",
+      "summary": "AUDIT NOT PERFORMABLE — FAILING CLOSED. The construction's 15 moves and the quoted Ramanujan 1913 givens both arrived as the literal string 'undefined' (template interpolation failure in the calling script), and no copy exists in the working directory. The 'invalid' verdict is procedural, not geometric: it means the construction is NOT CERTIFIED, not that a rules violation was found in it. Conditional notes are supplied for the likely target (Ramanujan 1913, J. Indian Math. Soc. V, 132): that canonical construction has exactly 4 rigid-compass transfers (RS=TQ, PK=PM, PL=MN, RC=RH), each legitimized for constructibility by Euclid I.2, at ~10 collapsing-legal moves per transfer (~36–44 total) for a strict expansion; its intersections all exist and its dependency order is forward — so if the audited moves match the canonical text, the expected verdict on re-run is valid (modern rules) and valid-after-I.2-expansion (strict collapsing rules). Re-invoke with the actual move list and quote interpolated."
+    },
+    "geomA": {
+      "findings": [
+        {
+          "claim": "F, F' = (1/2, ±√3/2), |FF'| = √3, X = (1/2, 0)",
+          "status": "confirmed",
+          "detail": "circle(R,1) ∩ unit circle solved exactly: radical axis x = 1 − 1²/2 = 1/2, y = ±√3/2. |FF'| = √3 exactly. Midpoint/foot X = (1/2,0), and |XR| = 1/2."
+        },
+        {
+          "claim": "circle(R, |XR|=1/2) meets unit circle at x = 7/8 with two real points; Z = (7/8, 0)",
+          "status": "confirmed",
+          "detail": "x = 1 − (1/2)²/2 = 1 − 1/8 = 7/8 exactly. Intersection points (7/8, ±√15/8); y² = 15/64 > 0 so both are real. Z = (7/8, 0)."
+        },
+        {
+          "claim": "circle(Z, 1) meets unit circle at x = 7/16 with two real points; Z' = (7/16, 0)",
+          "status": "confirmed",
+          "detail": "Radical axis: (7/4)x = 49/64, so x = 49/112 = 7/16 exactly. Points (7/16, ±3√23/16); y² = 207/256 > 0, two real points. Z' = (7/16, 0)."
+        },
+        {
+          "claim": "Chord lines FF', VV', WW' are all perpendicular to PR",
+          "status": "confirmed",
+          "detail": "Every circle in the construction is centered on the x-axis (PR). Subtracting two such circle equations eliminates y² identically, leaving a linear equation in x only — the common chord is a vertical line x = const, hence perpendicular to PR. (Radical axis ⟂ line of centers; all centers are collinear on PR.) This holds for every chord in moves 1–8 regardless of which circles define V, W."
+        },
+        {
+          "claim": "U = (7/16, 1/2) and |OU| = √113/16",
+          "status": "confirmed",
+          "detail": "Given U = (7/16, 8/16): |OU|² = 49/256 + 64/256 = 113/256, so |OU| = √113/16 exactly. The height y = 1/2 is one-move constructible on the chord x = 7/16, e.g. circle(Z', |XR| = 1/2) ∩ {x = 7/16} = (7/16, ±1/2). Minor caveat: the figure was not attached (rendered as 'undefined'), so I could not trace which specific move the diagram uses to place y = 1/2, only that the claimed coordinates are exact and constructible."
+        },
+        {
+          "claim": "113 = 7² + 8²",
+          "status": "confirmed",
+          "detail": "49 + 64 = 113. Not a coincidence here: U = (7/16, 8/16), so |OU| = √(7²+8²)/16 — the 7 and 8 are the numerators of U's coordinates over the common denominator 16."
+        },
+        {
+          "claim": "Radical-axis identity x = 1 − ρ²/2 for a circle of radius ρ centered at R cutting the unit circle, and its analogue for center Z",
+          "status": "confirmed",
+          "detail": "General form derived symbolically: circle center (d,0), radius ρ vs unit circle gives chord abscissa x = (d² − ρ² + 1)/(2d). At d = 1 this reduces exactly to x = 1 − ρ²/2 (valid whenever intersections are real, i.e. |1−ρ| < d < 1+ρ; as a radical-axis line it holds even without real intersection). At d = 7/8 the correct analogue is x = 113/112 − (4/7)ρ², which yields 7/16 at ρ = 1. WARNING: literal transcriptions of the R-formula are wrong for Z — 'd − ρ²/2' gives 3/8 and 'd − ρ²/(2d)' gives 17/56, both ≠ 7/16. Only the full (d² − ρ² + 1)/(2d) is correct in general."
+        }
+      ],
+      "summary": "Attempted refutation failed on every point: all claimed coordinates and lengths are exactly correct. With O=(0,0), R=(1,0), r=1: F,F' = (1/2, ±√3/2) with |FF'| = √3 and X = (1/2,0); circle(R, 1/2) cuts the unit circle at (7/8, ±√15/8) so Z = (7/8,0); circle(Z, 1) cuts it at (7/16, ±3√23/16) so Z' = (7/16,0); both chords have two real points. All common chords are vertical (⟂ PR) because every center lies on PR — subtracting the circle equations cancels y², leaving x = const. U = (7/16, 8/16) gives |OU| = √(7²+8²)/16 = √113/16, and 113 = 49+64. The identity x = 1 − ρ²/2 is exactly right for center R; the correct general form is x = (d² − ρ² + 1)/(2d) for center (d,0), which at d = 7/8, ρ = 1 gives 7/16 — but naive copies of the R-formula (e.g. d − ρ²/2 = 3/8) would be wrong, so the identity does not transfer literally to Z, only via the general formula. Sole caveat: the construction figure was not attached, so the specific moves defining V, W and the y = 1/2 height of U were inferred (a valid one-move construction exists: circle(Z', 1/2) ∩ {x = 7/16}); every explicitly stated number was verified with exact symbolic algebra (sympy).",
+      "verdict": "valid"
+    },
+    "geomB": {
+      "findings": [
+        {
+          "claim": "Circle centered Z'=(7/16,0) through O meets line OU at second point O'', and midpoint H of OO'' equals the foot of the perpendicular from Z' to OU",
+          "status": "confirmed",
+          "detail": "Exact: substituting the unit-speed parametrization of OU into the circle gives t(t - 49*sqrt(113)/904)=0, so O''=(343/904, 49/113). |Z'O|=|Z'O''|=7/16 (radii), so triangle OZ'O'' is isoceles with apex Z' and the altitude from Z' bisects chord OO''. Coordinates confirm: midpoint of OO'' = perpendicular foot = (343/1808, 49/226). The isoceles argument is valid; OU is a true secant (tangent at O is the line x=0, and OU is not vertical)."
+        },
+        {
+          "claim": "H lies strictly between O and U, and |UH| = |OU| - |OH| = 4/sqrt(113) exactly",
+          "status": "confirmed",
+          "detail": "|OH| = 49/(16*sqrt(113)) = 49*sqrt(113)/1808 ≈ 0.28810 and |OU| = sqrt(113)/16 ≈ 0.66439; strict betweenness follows from 0 < 49 < 113. |UH| = (113-49)/(16*sqrt(113)) = 64/(16*sqrt(113)) = 4/sqrt(113) = 4*sqrt(113)/113 exactly, verified both as the arithmetic difference and as the direct Euclidean distance |U - H|."
+        },
+        {
+          "claim": "G = (7/16, sqrt(3)) lies on line WW', and K on PR has |Z'K| = 4/sqrt(113)",
+          "status": "confirmed",
+          "detail": "Caveat: the figure was not provided (image undefined), so W, W', P could not be independently identified. Under the natural reading — WW' is the vertical line x = 7/16 through Z' (consistent with G and Z' sharing x-coordinate; sqrt(3) is classically constructible, e.g. as the half-height of the vesica of two radius-2 circles centered 2 apart on the axis) and PR is the x-axis diameter — G lies on WW' trivially, and K = (7/16 ± 4/sqrt(113), 0) has |Z'K| = 4/sqrt(113) = |UH|, a compass transfer. The stated coordinates are internally consistent; only the incidence with the unseen figure is taken on the prompt's word."
+        },
+        {
+          "claim": "Angle GZ'K is exactly 90 degrees",
+          "status": "confirmed",
+          "detail": "Exact: Z'G = (0, sqrt(3)) is vertical and Z'K = (±4/sqrt(113), 0) is horizontal; sympy confirms (G-Z')·(K-Z') = 0 identically. Not an approximation."
+        },
+        {
+          "claim": "|GK|^2 = 3 + 16/113 = 355/113 exactly, so |GK| = sqrt(355/113)*r with all approximation error confined to 355/113 vs pi",
+          "status": "confirmed",
+          "detail": "Exact by Pythagoras on the right angle at Z': |GK|^2 = |GZ'|^2 + |Z'K|^2 = 3 + 16/113 = (339+16)/113 = 355/113, confirmed symbolically for K on either side of Z'. With unit radius r = |OR| = 1, the square on GK has area exactly 355/113 vs circle area pi; the sole approximation is Milü's 355/113 ≈ pi (excess 2.66764e-7)."
+        },
+        {
+          "claim": "Error magnitudes: |GK| - sqrt(pi) ≈ 7.5e-8; square area relative error ≈ 8.5e-8; 140,000 sq mi circle gives side error ≈ 1 inch",
+          "status": "confirmed",
+          "detail": "Computed to 30 digits: |GK| - sqrt(pi) = 7.52528e-8 at r=1 (note: this is the ABSOLUTE difference at unit radius; the relative side error is 4.2457e-8). Area relative error = (355/113 - pi)/pi = 8.49137e-8 ≈ 8.5e-8. For circle area 140,000 sq mi: true side = sqrt(140000) ≈ 374.1657 mi; constructed side exceeds it by 1.58859e-5 mi = 1.00653 inches. All three claims accurate; the constructed square is slightly too large since 355/113 > pi."
+        }
+      ],
+      "verdict": "valid-with-caveats",
+      "summary": "All seven mathematical claims survive adversarial exact re-derivation (sympy, exact fractions/radicals). The chord-midpoint = perpendicular-foot identity holds via the isoceles-radii argument and coordinates (both equal (343/1808, 49/226)); |UH| = 4/sqrt(113) exactly; angle GZ'K is exactly 90 degrees by construction (vertical vs horizontal legs); |GK|^2 = 3 + 16/113 = 355/113 exactly, so the construction is an exact compass-straightedge realization of the Milü approximation pi ≈ 355/113. Error figures verified: |GK| - sqrt(pi) = 7.525e-8 (absolute, r=1), area relative error 8.491e-8, and a 140,000 sq mi circle yields a square side 1.0065 inches too long. Sole caveat: the construction figure was not provided (image undefined), so the incidences 'G on line WW'' and 'K on PR' were verified under the natural interpretation WW' = {x = 7/16} and PR = x-axis; every claim stated in explicit coordinates is exactly correct."
+    },
+    "sim": {
+      "findings": [
+        {
+          "claim": "A prose specification of the compass-and-straightedge construction was provided to the verifier",
+          "status": "refuted",
+          "detail": "The prompt contains the literal string 'undefined' where the spec text should appear — an orchestration-script templating bug (a JS variable holding the spec was undefined at interpolation time). Searched /tmp (including for an existing /tmp/audit-squircle), /Users/bot/dev, and the cadex repo for any file mentioning 'squircle', '355/113', 'straightedge', or the construction; no spec document exists on this machine. There is no construction to simulate."
+        },
+        {
+          "claim": "|GK| equals sqrt(355/113) (and approximates sqrt(pi))",
+          "status": "uncertain",
+          "detail": "Cannot be computed: |GK| is defined only by the missing spec. Spec-independent reference values were computed to high precision with mpmath (script: /tmp/audit-squircle/reference_constants.py): sqrt(355/113) = 1.772453926158302796092; sqrt(pi) = 1.772453850905516027298; sqrt(355/113) - sqrt(pi) = +7.52527867687938e-8; 355/113 - pi = +2.66764189062422e-7. If a candidate simulation reports |GK| agreeing with sqrt(355/113) to ~1e-15 and with sqrt(pi) only to ~7.5e-8, that is the expected signature of an exact-355/113 construction."
+        },
+        {
+          "claim": "Every intersection used in the construction exists (positive discriminants, two distinct points where claimed)",
+          "status": "uncertain",
+          "detail": "Not evaluable without the spec. No circle-circle, line-circle, or line-line intersection could be set up because no objects were defined."
+        },
+        {
+          "claim": "All intersection-point selections (upper/lower, left/right) in the prose are unambiguous",
+          "status": "uncertain",
+          "detail": "Not evaluable without the spec text."
+        },
+        {
+          "claim": "Verifier independence was preserved",
+          "status": "confirmed",
+          "detail": "No other agent's code was read, and no construction was fabricated to fill the gap. The final-length target sqrt(355/113) strongly suggests Ramanujan's 1913 approximate circle-squaring, but simulating a guessed construction would verify the verifier's invention rather than the submitted spec, so this was deliberately not done."
+        }
+      ],
+      "summary": "VERIFICATION NOT PERFORMED — INPUT MISSING (verdict 'invalid' here means fail-closed/unverified, NOT that the construction was refuted). The orchestration script interpolated the prose specification as the literal string 'undefined'; no copy of the spec exists anywhere on disk, so no independent simulation could be written. Zero of the three requested checks (|GK| value, intersection discriminants, selection ambiguities) could be executed. Action required: fix the template variable carrying the spec text and re-dispatch this verifier with the actual prose. Scratch dir /tmp/audit-squircle is prepared and contains reference_constants.py with the target constants: sqrt(355/113) = 1.772453926158303 (15 digits), sqrt(pi) = 1.772453850905516, difference +7.5253e-8; any correct exact-355/113 construction should match the former to machine precision and miss the latter by ~7.5e-8.",
+      "verdict": "invalid"
+    },
+    "ramCount": {
+      "optimistic": 25,
+      "pessimistic": 38,
+      "breakdown": "CAVEAT: the 'verbatim' construction text arrived as 'undefined', so I audited from the instruction list given, which matches Ramanujan 1913 (JIMS): circle centre O, diameter PR; H bisects PO; T trisects OR nearer R; TQ perp PR at T; chord RS=TQ; join PS; OM,TN parallel RS meeting PS at M,N; chord PK=PM; tangent at P with PL=MN; join RL,RK,KL; RC=RH; CD parallel KL meeting RL at D; square on RD. Assumed metric (standard elementary-move count): 1 move per straightedge line drawn, 1 move per compass circle/arc drawn; intersection points free; GIVEN = the circle and its centre O; rigid (non-collapsing) compass allowed, so a remote-radius circle costs 1 move but is tallied as a 'distance transfer'. Coordinates below use r=1, O=(0,0), P=(-1,0), R=(1,0). All steps verified numerically (RD^2 = 355/113 = 3.14159292).\n\nOPTIMISTIC (maximal reuse, cheapest standard sub-constructions):\n0. Diameter PR: 1 line. [1] (If PR counts as given, totals drop by 1: 24/37.)\n1. Bisect PO -> H: circle C_P=(P thru O); its intersections with the GIVEN circle are X,Y=(-1/2,±√3/2); line XY cuts PR at H=(-1/2,0). [2] (Reuse: C_P also gives P2=(-2,0) on line PR free.)\n2. Trisect OR -> T=(2/3,0) (RT=r/3): inversion trick — circle (R thru O) [also gives R2=(2,0)]; circle (P2 thru R), radius 3, meets it at W1=(5/6,√35/6); circle (W1 thru R) cuts PR at T. [3, zero transfers — every radius is taken from the circle's own centre to an existing point]\n3. Perpendicular TQ at T: Thales on circle(W1), which already passes through R AND T — line R–W1 extended gives antipode E=(2/3,√35/3); line E–T is the perpendicular, meeting the circle at Q=(2/3,√5/3). [2]\n4. Chord RS=TQ: circle (R, radius TQ) ∩ circle -> S. [1] TRANSFER #1 (explicit in the text: 'place the chord RS=TQ').\n5. Join PS: 1 line. [1] (PS^2=31/9.)\n6a. OM || RS -> M: since O is the midpoint of PR, the midsegment theorem makes M the MIDPOINT of PS — no parallel needed. Circle (S thru O) (radius 1, S is on the circle) meets the already-drawn C_P at two points; the line through them is the perpendicular bisector of PS -> M. [2, zero transfers]\n6b. TN || RS -> N (at 5/6 of PS): parallelogram — circle (T, radius RS) TRANSFER #2; circle (S, radius RT) TRANSFER #3; line T–Z (Z=T+S−R) cuts PS at N. [3]\n7. Chord PK=PM: circle (P thru M) ∩ circle -> K. [1] NOT a transfer (compass anchored at P, an endpoint of PM).\n8. Tangent at P + PL=MN: O and P2 are symmetric about P; circle (P2 thru R) radius 3 already exists (step 2), so circle (O, radius P2R=3) TRANSFER #4 meets it at (-1,±2√2); line through them is the tangent x=-1. Then circle (P, radius MN) TRANSFER #5 cuts it at L. [3] (No-transfer tangent variant: circle(P2 thru O)+circle(O thru R2)+line = +1 move.)\n9. Join RL, RK: [2]. Drawing KL is skippable when generous — step 11's parallelogram only needs the POINTS K,L for the direction.\n10. Cut off RC=RH on RK: circle (R thru H), radius 3/2. [1] NOT a transfer (anchored at endpoint R).\n11. CD || KL -> D on RL: parallelogram — circle (C, radius KL) TRANSFER #6; circle (L, radius CK) TRANSFER #7; line C–Z2 cuts RL at D. [3]\nOPTIMISTIC TOTAL: 1+2+3+2+1+1+2+3+1+3+2+1+3 = 25 moves (13 circles + 12 lines).\n\nPESSIMISTIC (standard textbook sub-constructions, no cross-step reuse, KL drawn as instructed): diameter 1; bisect 3 (2 circles+line); trisect 6; erect perpendicular at T 4; RS 1; PS 1; OM parallel 4 + TN parallel 4; PK 1; tangent at endpoint 4 + PL 1; joins 3; RC 1; CD parallel 4 = 38.\n\nRIGID-COMPASS DISTANCE TRANSFERS (radius lifted from a remote segment): the TEXT itself mandates exactly 2 — RS=TQ and PL=MN (RC=RH and PK=PM are anchored at an endpoint of the copied segment, hence not transfers). But any efficient implementation adds transfers for the parallels: the 25-move version uses 7 (RS; 2 for TN; 1 for the tangent shortcut; PL; 2 for CD). A transfer-lean variant is 26 moves / 6 transfers; pushing down to the 2 textually-forced transfers requires transfer-free parallels (double-perpendicular, ~5-6 moves each), ballooning to roughly 31-33 moves. Versus 4 transfers in the audited construction, Ramanujan needs 6-7 in practice, minimum 2 in the letter of the text.",
+      "summary": "Ramanujan's 1913 quadrature (RD = r·sqrt(355/113)) costs 25 elementary moves under a generous audit (1 move per line or circle, rigid compass, points free, circle+centre given; 24 if the diameter is pre-drawn) and about 38 with plain textbook sub-constructions and no reuse. Key generosities: bisection reusing the given circle (2 moves), a 3-move zero-transfer trisection via inversion whose auxiliary circle then yields the perpendicular at T by Thales for 2 lines, and OM||RS replaced by 'midpoint of PS' (midsegment theorem, 2 moves). Rigid-compass distance transfers: 2 are explicitly mandated by his text (RS=TQ, PL=MN), but efficient implementations use 6-7 once the parallels TN and CD (and optionally the tangent) are built by compass-parallelogram — compared with 4 transfers in the audited construction. Caveat: the quoted 'verbatim' text and metric arrived as 'undefined'; the audit assumes the standard elementary-move metric and the known 1913 instruction list, with every geometric claim verified numerically."
+    },
+    "prior": {
+      "de_gelder": "Jacob de Gelder, 1849 (published in Grünert's Archiv, vol. 7). He used exactly the identity 355/113 = 3 + 4^2/(7^2+8^2), but he constructed ONLY the length AH = 4^2/(7^2+8^2) = 16/113 (the fractional part of the pi-approximation), i.e. a segment representing pi ~ 355/113 — NOT the side of the square. This is stated explicitly in Hobson's 1913 book (\"Gelder did not construct the side of the square; it was enough for him to find AH\") and repeated in German Wikipedia, which labels the extension to the side (BJ=CB, JK=AH, Thales semicircle giving BM = sqrt(AK) = a) as a \"Weiterführung\" (continuation) added by the article's illustrator, not de Gelder's original. His AH construction is short as narrated (~5 compound steps: CE=7/8, AF=1/2, FG parallel CD, FH parallel EG), but the steps include two parallels and two rational subdivisions, so in elementary (Lemoine-type) move counting it is well over 15 moves before you even add the mean-proportional step needed to turn 355/113 into a side. Sources: https://en.wikisource.org/wiki/%22Squaring_the_Circle%22:_a_History_of_the_Problem/Chapter_2 ; https://de.wikipedia.org/wiki/Quadratur_des_Kreises ; https://en.wikipedia.org/wiki/Squaring_the_circle",
+      "hobson": "E. W. Hobson, \"Squaring the Circle\": a History of the Problem (CUP, 1913). The book surveys Kochanski 1685 (JL = sqrt(40/3 - sqrt(12)) = 3.141533, 4 decimals, rectification not side), Specht 1836 (13/50*sqrt(146) = 3.14159195, ~6 significant decimals, circumference length, not side), and de Gelder's 355/113 value, noting 355/113 = 3 + 4^2/(7^2+8^2) \"can easily be constructed\". Hobson's OWN approximate construction (in the same book) produces the SIDE of the square directly: with circle center O, take OD = 3/5 r, OE = 1/2 r, OF = 3/2 r; draw semicircles on DE and AF; the perpendicular to AB at O cuts them at G and H; then GH ~ 1.77246 r ~ sqrt(pi)*r. It is remarkably economical — German Wikipedia: \"needs only three semicircles and two mutually perpendicular segments\" — but its constant is pi ~ 3.14164079 (equivalent to (6/5)(1+phi)), correct to only 3 decimal places of pi (~4 decimals of the side). So Hobson = few moves but LOW accuracy (not 6 decimals). Sources: https://en.wikisource.org/wiki/%22Squaring_the_Circle%22:_a_History_of_the_Problem/Chapter_2 ; https://de.wikipedia.org/wiki/Quadratur_des_Kreises ; https://mathshistory.st-andrews.ac.uk/HistTopics/Squaring_the_circle/ ; https://en.wikipedia.org/wiki/Squaring_the_circle",
+      "ramanujan": "Ramanujan published two constructions, and BOTH deliver the side of the square (a segment whose square equals the circle), not merely a pi-length. (1) 1913, \"Squaring the circle\", J. Indian Math. Soc. 5, p. 132: circle PQR, center O, diameter PR; bisect PO at H; T = trisection point of OR nearer R; TQ perpendicular to PR; chord RS = TQ; join PS; OM and TN parallel to RS; chord PK = PM; tangent PL = MN; join RL, RK, KL; cut off RC = RH; CD parallel to KL meeting RL at D. Then \"the square on RD will be equal to the circle PQR approximately\", and Ramanujan's own note: RD = (d/2)*sqrt(355/113) = r*sqrt(pi) very nearly (6 decimals of pi; his remark: for a circle of 140,000 sq. miles, RD errs by ~1 inch). So a published construction of the side as sqrt(355/113)*r EXISTS since 1913 — but it is a complex figure: as narrated ~12 compound steps including a bisection, a trisection, a perpendicular, three parallels, a tangent, and several chord/length transfers; in Lemoine elementary-move counting (perpendicular=3, parallel=5, trisection=4, arbitrary length transfer up to 11) it is roughly 35-45 moves, far above 15. Beatrix (2022) simply calls it \"a complex figure\"; no published elementary-move count for it was found. (2) 1914, \"Modular equations and approximations to pi\", Quart. J. Math. 44, 350-372, section 12: construction whose final segment squared equals the circle with pi ~ (9^2 + 19^2/22)^(1/4) = (2143/22)^(1/4), 8 decimal places (8000-mile-diameter circle → error a fraction of an inch). Beatrix counted a replication of it at 58 elementary steps for the full sqrt(pi) length. Sources: https://en.wikisource.org/wiki/Squaring_the_circle ; http://ramanujan.sirinudi.org/Volumes/published/ram05.pdf ; https://www.parabola.unsw.edu.au/sites/default/files/2024-02/vol58_no2_2.pdf ; https://mathshistory.st-andrews.ac.uk/HistTopics/Squaring_the_circle/",
+      "other": "Recreational/modern literature: (a) MathWorld's Circle Squaring page cites the 355/113 side construction as reproduced by Olds 1963 (Continued Fractions), Martin Gardner 1966 (New Mathematical Diversions), and Bold 1982 (Famous Problems of Geometry) — all reprints/expositions of Ramanujan's 1913 construction, none simpler. (b) Robert Dixon, Mathographics (1987, Dover 1991, pp. 44-47): constructions for pi ~ (6/5)(1+phi) = 6*phi^2/5 = 3.141640 (3 decimal places) and Kochanski's sqrt(40/3 - 2*sqrt(3)); nothing at 6 decimals. (c) Hung Viet Chu, \"Squaring the Circle Revisited\" (arXiv:1908.01202): a 6-compound-step construction of MH = sqrt(6/5*(1+phi)) (3 decimals) and a 9-decimal side construction sqrt(63/25*(1 + 5/2*(15*sqrt(5)-7)/269)); Beatrix counts the latter at >= 68 elementary steps. (d) Frederic Beatrix, \"Squaring the circle like a medieval master mason\", Parabola 58(2), 2022: uses Lemoine geometrography (line=1, circle=1, perpendicular/midpoint=3, parallel=5, trisect=4, transfer=11) and gives a 13-step construction of FM = sqrt(phi^2 + phi^2/5) = sqrt(6*phi^2/5) ~ sqrt(pi), accuracy 0.0007% (pi to ~3-4 decimals), which he claims is \"the best solution for approximately squaring the circle to date\" for hand drawing. This is the current published simplicity-vs-accuracy frontier: 13 moves buys only ~4 decimals. (e) The specific identity 355/113 = 3 + 4^2/(7^2+8^2) realized as a right-triangle HYPOTENUSE for the side — i.e., legs r*sqrt(3) and 4r/sqrt(113) giving hypotenuse r*sqrt(3 + 16/113) = r*sqrt(355/113) — was NOT found anywhere: de Gelder used the identity additively for the pi-length only, and targeted searches (Wikipedia/HandWiki/Grokipedia/MathWorld/blogs) surfaced no such hypotenuse construction. Caveat: savory.de (TLS error) and quadibloc.com (connection refused) could not be fetched. Sources: https://mathworld.wolfram.com/CircleSquaring.html ; https://arxiv.org/pdf/1908.01202 ; https://www.parabola.unsw.edu.au/sites/default/files/2024-02/vol58_no2_2.pdf ; https://en.wikipedia.org/wiki/Squaring_the_circle",
+      "prior_15_move_side_construction_found": "no",
+      "summary": "Prior art in one line: the side-as-sqrt(355/113)*r construction exists (Ramanujan 1913, RD = r*sqrt(pi) with pi ~ 355/113, 6 decimals), but nothing near 15 moves. De Gelder 1849 used 355/113 = 3 + 4^2/(7^2+8^2) yet constructed only the pi-length AH = 16/113, explicitly NOT the side (the side extension seen online is a Wikipedia editorial continuation). Hobson's own 1913 construction gives the side in very few moves (3 semicircles + 2 perpendicular segments) but at only ~3-4 decimals (pi ~ 3.14164, the (6/5)(1+phi) value later repeated by Dixon 1991 and, in 13 Lemoine-counted steps, by Beatrix 2022). Ramanujan's 1913 sqrt(355/113) side construction is a complex figure — roughly 35-45 elementary (Lemoine) moves by my count (bisection + trisection + perpendicular + 3 parallels + tangent + multiple length transfers); his 1914 8-decimal version was counted at 58 steps and Chu's 9-decimal 2019 version at 68+. The published simplicity/accuracy frontier is therefore: 13 moves -> 4 decimals (Beatrix), ~40+ moves -> 6 decimals (Ramanujan 1913), 58 moves -> 8 decimals (Ramanujan 1914). No published construction was found that (a) reaches 6+ decimals for the SIDE in ~15 or fewer elementary moves, or (b) realizes 355/113 = 3 + 4^2/(7^2+8^2) as a right-triangle hypotenuse (legs r*sqrt(3), 4r/sqrt(113)) for the side. A ~15-move sqrt(355/113) side construction on that identity would beat the published frontier and appears novel — with the caveat that two hobbyist catalogs (savory.de, quadibloc.com) were unreachable and pre-1900 German journal literature was not exhaustively searched. Key sources: Hobson's book ch.2 (Wikisource), Ramanujan JIMS 5 (1913) p.132 (Wikisource / sirinudi.org), de.wikipedia Quadratur des Kreises, MathWorld Circle Squaring (Olds 1963, Gardner 1966, Bold 1982), Dixon Mathographics 1987, Chu arXiv:1908.01202, Beatrix Parabola 58(2) 2022."
+    }
+  }
+}
